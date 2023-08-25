@@ -1,0 +1,157 @@
+<mxfile host="Electron" modified="2023-08-19T04:27:53.030Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="05fE7QosZokR-tPA_zTO" version="21.6.8" type="device">
+  <diagram name="Page-1" id="5ick1LJjfqa4MVtTxawN">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-58" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="60" y="10" width="730" height="1080" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-9" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="280" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-6" value="bootstrap(){&lt;br&gt;NestFactoty.create(AppModule)&lt;br&gt;listen( port )&lt;br&gt;}" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-9">
+          <mxGeometry y="30" width="170" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-8" value="main.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-9">
+          <mxGeometry width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-11" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="280" y="170" width="170" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-12" value="@Module({&lt;br&gt;imports: [CommonModule],&lt;br&gt;...&lt;br&gt;})&lt;br&gt;implements NestModule {&lt;br&gt;configure: (consumer: MidlewareConsumer) {&lt;br&gt;...&lt;br&gt;}}" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-11">
+          <mxGeometry y="30" width="170" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-13" value="app.mpdule.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-11">
+          <mxGeometry width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-13" target="Qx2x2WHSP5ue26SoDGpS-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-15" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="280" y="410" width="170" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-16" value="@Module({&lt;br&gt;controller: [CommonController],&lt;br&gt;providers: [CommonService]&lt;br&gt;exports: [CommonService],&lt;br&gt;...&lt;br&gt;})&lt;br&gt;export class CommonModule {&lt;br&gt;&lt;br&gt;}" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-15">
+          <mxGeometry y="30" width="170" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-17" value="common.module.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-15">
+          <mxGeometry width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-17" target="Qx2x2WHSP5ue26SoDGpS-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-19" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="130" y="645" width="180" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-20" value="@Controller(&#39;/common&#39;) --&amp;gt; /common&lt;br&gt;export class CommonController {&lt;br&gt;constructor(...inject){}&lt;br&gt;&lt;br&gt;// private commonService: CommonService&lt;br&gt;@Header(...)&lt;br&gt;@Get()&lt;br&gt;@...&lt;br&gt;getAll(@Body() variable: type, @Params() variable: type) {&lt;br&gt;this.commonService.getAll()&lt;br&gt;}&lt;br&gt;...&lt;br&gt;}" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-19">
+          <mxGeometry x="-60" y="30" width="240" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-21" value="common.controller.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-19">
+          <mxGeometry x="-60" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-27" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-19">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="70" y="100" as="sourcePoint" />
+            <mxPoint x="90" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-22" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="440" y="650" width="170" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-23" value="@Injectable()&lt;br&gt;export class CommonService {&lt;br&gt;...variable (private, public, ..., static, ...)&lt;br&gt;&lt;br&gt;getAll() {&lt;br&gt;...logic&lt;br&gt;}&lt;br&gt;...&lt;br&gt;}" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-22">
+          <mxGeometry y="30" width="170" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-24" value="common.service.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-22">
+          <mxGeometry width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-29" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-21" target="Qx2x2WHSP5ue26SoDGpS-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="720" as="sourcePoint" />
+            <mxPoint x="280" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-31" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-24" target="Qx2x2WHSP5ue26SoDGpS-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="720" as="sourcePoint" />
+            <mxPoint x="620" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-32" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" target="Qx2x2WHSP5ue26SoDGpS-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="730" as="sourcePoint" />
+            <mxPoint x="620" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.646;entryY=0.977;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="225.03999999999996" y="974" as="sourcePoint" />
+            <mxPoint x="225.03999999999996" y="893.94" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-39" target="Qx2x2WHSP5ue26SoDGpS-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-43" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-35" target="Qx2x2WHSP5ue26SoDGpS-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="920" as="sourcePoint" />
+            <mxPoint x="620" y="870" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-44" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-39" target="Qx2x2WHSP5ue26SoDGpS-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="920" as="sourcePoint" />
+            <mxPoint x="620" y="870" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-45" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="560" y="410" width="170" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-46" value="..." style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-45">
+          <mxGeometry y="30" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-47" value="....module.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-45">
+          <mxGeometry width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-48" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-47" target="Qx2x2WHSP5ue26SoDGpS-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="520" as="sourcePoint" />
+            <mxPoint x="620" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-49" value="&lt;br&gt;Database" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="578" y="187" width="90" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="Qx2x2WHSP5ue26SoDGpS-58" source="Qx2x2WHSP5ue26SoDGpS-12" target="Qx2x2WHSP5ue26SoDGpS-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-52" value="sql, redis, mongo,..." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="560" y="157" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-53" value="typeorm" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="448" y="210" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-55" value="&lt;h1&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;NestJS&lt;/span&gt;&lt;/h1&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Nest CLI&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Pipe&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Class Transform&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Class Validator&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Dependency Injection&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Provider (useClass, useValue, factory)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Share Module, Dynamic Module Register&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Dynamic Module forRoot, forFeature&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Inject scope&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Cicular Dependency&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Connect Database (typeorm)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Custom Decorator&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry width="190" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-56" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="140" y="970" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-34" value="export interface ICommon {&lt;br&gt;...type&lt;br&gt;}" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-56">
+          <mxGeometry y="30" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-35" value="common.interface.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-56">
+          <mxGeometry width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-57" value="" style="group" vertex="1" connectable="0" parent="Qx2x2WHSP5ue26SoDGpS-58">
+          <mxGeometry x="440" y="970" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-38" value="export class CommonDto {&lt;br&gt;[variable]: type&lt;br&gt;...&lt;br&gt;}" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-57">
+          <mxGeometry y="30" width="170" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Qx2x2WHSP5ue26SoDGpS-39" value="common.dto.ts" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="Qx2x2WHSP5ue26SoDGpS-57">
+          <mxGeometry width="170" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
