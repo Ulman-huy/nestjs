@@ -6,9 +6,23 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class NoteService {
   constructor(private prismaService: PrismaService) {}
 
-  getNotes(id: number) {}
+  async getNotes(userId: number) {
+    const notes = this.prismaService.note.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    return notes;
+  }
 
-  getNoteById(id: number) {}
+  async getNoteById(noteId: number) {
+    const note = await this.prismaService.note.findFirst({
+      where: {
+        id: noteId,
+      },
+    });
+    return note;
+  }
 
   async insertNote(userId: number, insertNoteDTO: InsetNoteDTO) {
     const note = await this.prismaService.note.create({
@@ -20,7 +34,23 @@ export class NoteService {
     return note;
   }
 
-  updateNote(id, data: UpdateNoteDTO) {}
+  async updateNote(noteId: number, updateNoteDTO: UpdateNoteDTO) {
+    const newNote = await this.prismaService.note.update({
+      where: {
+        id: noteId,
+      },
+      data: {
+        ...updateNoteDTO,
+      },
+    });
+    return newNote;
+  }
 
-  deleteNote(id) {}
+  async deleteNote(nodeId: number) {
+    await this.prismaService.note.delete({
+      where: {
+        id: nodeId,
+      },
+    });
+  }
 }

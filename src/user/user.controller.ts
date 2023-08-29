@@ -4,7 +4,7 @@ import { User } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
 import { MyJwtGuard } from '../auth/guard';
 
-@Controller('users')
+@Controller('api/v1/users')
 export class UserController {
   //   @UseGuards(AuthGuard('jwt'))
   @UseGuards(MyJwtGuard)

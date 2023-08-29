@@ -16,7 +16,7 @@ import { InsetNoteDTO } from './dto';
 import { UpdateNoteDTO } from './dto';
 
 @UseGuards(MyJwtGuard)
-@Controller('notes')
+@Controller('api/v1/notes')
 export class NoteController {
   constructor(private noteService: NoteService) {}
   @Get()

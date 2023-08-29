@@ -14,35 +14,30 @@ export class AuthService {
   ) {}
   async register(authDTO: AuthDTO) {
     const hashPassword = await argon.hash(authDTO.password);
-    const userExisted = await this.prismaService.user.findFirst({
+    const userExiting = await this.prismaService.user.findFirst({
       where: {
         email: authDTO.email,
       },
     });
-    if (userExisted) {
-      throw new ForbiddenException('Email is existed!');
-    } else {
-      try {
-        const user = await this.prismaService.user.create({
-          data: {
-            email: authDTO.email,
-            hashedPassword: hashPassword,
-            lastName: '',
-            firstName: '',
-          },
-          // only selected...
-          select: {
-            id: true,
-            email: true,
-            createdAt: true,
-          },
-          // Should "unique"
-        });
-        return this.signJwtToken(user.id, user.email);
-      } catch (e) {
-        return e;
-      }
+    if (userExiting) {
+      throw new ForbiddenException('Email đã tồn tại!');
     }
+    const user = await this.prismaService.user.create({
+      data: {
+        email: authDTO.email,
+        hashedPassword: hashPassword,
+        lastName: '',
+        firstName: '',
+      },
+      // only selected...
+      select: {
+        id: true,
+        email: true,
+        createdAt: true,
+      },
+      // Should "unique"
+    });
+    return this.signJwtToken(user.id, user.email);
   }
   async login(authDTO: AuthDTO) {
     const user = await this.prismaService.user.findFirst({
@@ -51,7 +46,7 @@ export class AuthService {
       },
     });
     if (!user) {
-      throw new ForbiddenException('Email does not exist!');
+      throw new ForbiddenException('Tài khoản email không tồn tại!');
     }
     const passwordMatched = await argon.verify(
       user.hashedPassword,
@@ -59,7 +54,7 @@ export class AuthService {
     );
 
     if (!passwordMatched) {
-      throw new ForbiddenException('Incorrect password!');
+      throw new ForbiddenException('Tài khoản hoặc mật khẩu không chính xác!');
     }
     delete user.hashedPassword;
 
@@ -68,18 +63,23 @@ export class AuthService {
   async signJwtToken(
     userId: number,
     email: string,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     const payload = {
       sub: userId,
       email: email,
     };
 
-    const jwtString = this.jwtService.signAsync(payload, {
+    const jwtString = await this.jwtService.signAsync(payload, {
       secret: this.configService.get('SECRET_KEY'),
       expiresIn: '1h',
     });
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get('REFRESH_SECRET_KEY'),
+      expiresIn: '7d',
+    });
     return {
-      accessToken: (await jwtString).toString(),
+      accessToken: jwtString,
+      refreshToken: refreshToken,
     };
   }
 }
