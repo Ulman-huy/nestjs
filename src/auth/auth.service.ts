@@ -63,7 +63,10 @@ export class AuthService {
   async signJwtToken(
     userId: number,
     email: string,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  ): Promise<{
+    accessToken: string;
+    // ; refreshToken: string
+  }> {
     const payload = {
       sub: userId,
       email: email,
@@ -73,13 +76,13 @@ export class AuthService {
       secret: this.configService.get('SECRET_KEY'),
       expiresIn: '1h',
     });
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get('REFRESH_SECRET_KEY'),
-      expiresIn: '7d',
-    });
+    // const refreshToken = await this.jwtService.signAsync(payload, {
+    //   secret: this.configService.get('REFRESH_SECRET_KEY'),
+    //   expiresIn: '7d',
+    // });
     return {
       accessToken: jwtString,
-      refreshToken: refreshToken,
+      // refreshToken: refreshToken,
     };
   }
 }

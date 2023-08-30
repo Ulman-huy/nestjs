@@ -2,17 +2,21 @@
 version: "3.8"
 services: 
   dev-database:
-    image: postgres:15.0
+    image: postgres:latest
     ports: 
       - 5432:5432
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456789
       POSTGRES_DB: nestjs
     networks:
       - nestjs-network
+    volumes:
+      - postgres:/var/lib/postgresql/data
 networks:
   nestjs-network:
-
+volumes:
+  postgres:
 #create container, network, ... from "docker compose" file:
 #docker compose up -d
