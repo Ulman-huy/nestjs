@@ -12,32 +12,67 @@ datasource db {
 
 model User {
   id             Int       @id @default(autoincrement())
-  email          String
+  email          String    @unique
   hashedPassword String
   firstName      String?
   lastName       String?
   image          String?
+  bio            String?
+  location       String?
+  friends        String[]
   birthday       DateTime?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
-
   // relationship
-  notes Note[]
+  posts          Post[]
+  comments       Comment[]
 
   @@map("user")
 }
 
-model Note {
-  id          Int      @id @default(autoincrement())
-  title       String
+model Post {
+  id          Int       @id @default(autoincrement())
   description String
-  url         String
+  images      String?
+  like        Int?      @default(0)
+  haha        Int?      @default(0)
+  dear        Int?      @default(0)
+  angry       Int?      @default(0)
+  wow         Int?      @default(0)
+  sad         Int?      @default(0)
+  share       Int?      @default(0)
+  comment     Int?      @default(0)
+  type        String    @default("NORMAL")
+  background  String    @default("")
   // ...
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  // relationship
+  userId      Int
+  comments    Comment[]
+  User        User      @relation(fields: [userId], references: [id])
+
+  @@map("post")
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  description String
+  image       String?
+  like        Int?     @default(0)
+  haha        Int?     @default(0)
+  dear        Int?     @default(0)
+  angry       Int?     @default(0)
+  wow         Int?     @default(0)
+  sad         Int?     @default(0)
+  share       Int?     @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  userId      Int
-  // relationship
-  user        User     @relation(fields: [userId], references: [id])
 
-  @@map("note")
+  userId Int
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
+
+  @@map("comment")
 }
