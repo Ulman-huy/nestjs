@@ -13,9 +13,11 @@ datasource db {
 model User {
   id             Int       @id @default(autoincrement())
   email          String    @unique
+  slug           String?   @default(uuid())
   hashedPassword String
   firstName      String?
   lastName       String?
+  fullName       String?
   image          String?
   bio            String?
   location       String?
@@ -42,8 +44,8 @@ model Post {
   sad         Int?      @default(0)
   share       Int?      @default(0)
   comment     Int?      @default(0)
-  type        String    @default("NORMAL")
-  background  String    @default("")
+  type        String?   @default("DEFAULT")
+  background  String?   @default("")
   // ...
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
