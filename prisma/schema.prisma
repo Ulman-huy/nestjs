@@ -35,7 +35,7 @@ model User {
 model Post {
   id          Int       @id @default(autoincrement())
   description String
-  images      String?
+  images      String?   @default("")
   like        Int?      @default(0)
   haha        Int?      @default(0)
   dear        Int?      @default(0)

@@ -11,8 +11,9 @@ export class PostService {
     try {
       const posts = await this.prismaService.post.findMany({
         orderBy: {
-          id: 'asc',
+          id: 'desc',
         },
+        take: 10,
       });
 
       const postPromises = posts.map(async (post: PostDTO) => {
@@ -81,13 +82,20 @@ export class PostService {
   }
 
   async insertPost(userId: number, insertPostDTO: InsetPostDTO) {
-    const post = await this.prismaService.post.create({
-      data: {
-        ...insertPostDTO,
-        userId: userId,
-      },
-    });
-    return post;
+    try {
+      const post = await this.prismaService.post.create({
+        data: {
+          ...insertPostDTO,
+          userId: userId,
+        },
+      });
+      return {
+        status: 201,
+        data: post,
+      };
+    } catch (e) {
+      return e;
+    }
   }
 
   async updatePost(postId: number, updatePostDTO: UpdatePostDTO) {

@@ -1,16 +1,13 @@
-import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class InsetPostDTO {
   userId: number;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   description: string;
 
-  @IsNotEmpty()
-  @IsString()
-  images: string;
-
+  images?: string;
   like?: number;
   haha?: number;
   dear?: number;
