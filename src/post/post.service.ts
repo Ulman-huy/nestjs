@@ -64,12 +64,59 @@ export class PostService {
   }
 
   async getPosts(userId: number) {
-    const posts = await this.prismaService.post.findMany({
-      where: {
-        userId: userId,
-      },
-    });
-    return posts;
+    try {
+      const posts = await this.prismaService.post.findMany({
+        orderBy: {
+          id: 'desc',
+        },
+        take: 10,
+      });
+
+      const postPromises = posts.map(async (post: PostDTO) => {
+        const user = await this.prismaService.user.findUnique({
+          where: {
+            id: post.userId,
+          },
+          select: {
+            email: true,
+            image: true,
+            firstName: true,
+            lastName: true,
+          },
+        });
+        const comment = await this.prismaService.comment.findFirst({
+          where: {
+            postId: post.id,
+          },
+        });
+        let userComment = null;
+        if (comment) {
+          userComment = await this.prismaService.user.findFirst({
+            where: {
+              id: comment.userId,
+            },
+            select: {
+              email: true,
+              image: true,
+              firstName: true,
+              lastName: true,
+            },
+          });
+        }
+
+        return {
+          ...post,
+          user: { ...user },
+          commentPrivew: { ...comment, user: userComment },
+        };
+      });
+
+      const res = await Promise.all(postPromises);
+      return res;
+    } catch (error) {
+      // Handle errors here
+      throw error;
+    }
   }
 
   async getPostById(postId: number) {
@@ -98,13 +145,13 @@ export class PostService {
     }
   }
 
-  async updatePost(postId: number, updatePostDTO: UpdatePostDTO) {
+  async updatePost(userId: number, updatePostDTO: UpdatePostDTO) {
     const newPost = await this.prismaService.post.update({
       where: {
-        id: postId,
+        id: updatePostDTO.postId,
       },
       data: {
-        ...updatePostDTO,
+        // ...updatePostDTO,
       },
     });
     return newPost;
@@ -116,5 +163,32 @@ export class PostService {
         id: postId,
       },
     });
+  }
+
+  async hidePost(userId: number, updatePostDTO: UpdatePostDTO) {
+    const post = await this.prismaService.post.findFirst({
+      where: {
+        id: updatePostDTO.postId,
+      },
+    });
+    // if (!post.hides || !Array.isArray(post.hides)) {
+    //   post.hides = [];
+    // }
+    // post.hides.push(userId);
+    // await this.prismaService.post.update({
+    //   where: {
+    //     id: updatePostDTO.postId,
+    //   },
+    //   data: {
+    //     ...post,
+    //   },
+    // });
+    // return {
+    //   status: 200,
+    //   message: 'Đã ẩn bài viết ' + updatePostDTO.postId,
+    // };
+    console.log(post);
+    
+    return post;
   }
 }

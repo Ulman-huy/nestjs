@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "post" ALTER COLUMN "type" DROP NOT NULL,
-ALTER COLUMN "background" DROP NOT NULL;

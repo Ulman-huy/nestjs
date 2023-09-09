@@ -1,14 +1,10 @@
 import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class UpdatePostDTO {
-  @IsString()
-  @IsOptional()
-  description?: string;
-
   @IsNotEmpty()
-  @IsString()
+  postId: number;
+  description?: string;
   images?: string;
-
   like?: number;
   haha?: number;
   dear?: number;
@@ -17,6 +13,7 @@ export class UpdatePostDTO {
   sad?: number;
   share?: number;
   comment?: number;
-  type: string;
+  type?: string;
+  hides?: number[];
   background?: string;
 }

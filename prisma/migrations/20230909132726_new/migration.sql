@@ -22,7 +22,7 @@ CREATE TABLE "user" (
 CREATE TABLE "post" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "images" TEXT,
+    "images" TEXT DEFAULT '',
     "like" INTEGER DEFAULT 0,
     "haha" INTEGER DEFAULT 0,
     "dear" INTEGER DEFAULT 0,
@@ -33,6 +33,7 @@ CREATE TABLE "post" (
     "comment" INTEGER DEFAULT 0,
     "type" TEXT DEFAULT 'DEFAULT',
     "background" TEXT DEFAULT '',
+    "hides" INTEGER[] DEFAULT ARRAY[]::INTEGER[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" INTEGER NOT NULL,

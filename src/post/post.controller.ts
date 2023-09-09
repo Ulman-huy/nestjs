@@ -51,7 +51,17 @@ export class PostController {
     @GetUser('id', ParseIntPipe) userId: number,
     @Body() updatePostDTO: UpdatePostDTO,
   ) {
+    console.log({ updatePostDTO, userId });
     return this.postService.updatePost(userId, updatePostDTO);
+  }
+
+  @UseGuards(MyJwtGuard)
+  @Patch('hide')
+  hidePost(
+    @GetUser('id', ParseIntPipe) userId: number,
+    @Body() updatePostDTO: UpdatePostDTO,
+  ) {
+    console.log({ updatePostDTO, userId });
   }
 
   @UseGuards(MyJwtGuard)
