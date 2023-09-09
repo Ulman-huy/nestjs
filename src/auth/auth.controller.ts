@@ -4,10 +4,11 @@ import { AuthDTO } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import {Response} from 'express'
+import { ConfigService } from '@nestjs/config';
 
 @Controller('api/v1/auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private configService: ConfigService) {}
 
   @Post('register')
   register(@Body() body: AuthDTO) {
@@ -41,7 +42,7 @@ export class AuthController {
       throw new Error("File is not image")
     }
     const response = {
-      url: `http://localhost:3000/api/v1/auth/pictures/${file.filename}`
+      url: `${this.configService.get('BASE_API')}/auth/pictures/${file.filename}`
     }
     return response
   }
