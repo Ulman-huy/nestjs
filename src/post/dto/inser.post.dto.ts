@@ -8,12 +8,12 @@ export class InsetPostDTO {
   description: string;
 
   images?: string;
-  like?: number;
-  haha?: number;
-  dear?: number;
-  angry?: number;
-  wow?: number;
-  sad?: number;
+  likes?: number[];
+  hahas?: number[];
+  dears?: number[];
+  angrys?: number[];
+  wows?: number[];
+  sads?: number[];
   share?: number;
   comment?: number;
   type: string;

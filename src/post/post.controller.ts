@@ -12,8 +12,7 @@ import {
 import { MyJwtGuard } from '../auth/guard';
 import { PostService } from './post.service';
 import { GetUser } from '../auth/decorator';
-import { InsetPostDTO } from './dto';
-import { UpdatePostDTO } from './dto';
+import { InsetPostDTO, CommentDTO, UpdatePostDTO } from './dto';
 
 @Controller('api/v1/posts')
 export class PostController {
@@ -51,7 +50,6 @@ export class PostController {
     @GetUser('id', ParseIntPipe) userId: number,
     @Body() updatePostDTO: UpdatePostDTO,
   ) {
-    console.log({ updatePostDTO, userId });
     return this.postService.updatePost(userId, updatePostDTO);
   }
 
@@ -68,5 +66,20 @@ export class PostController {
   @Delete()
   deletePost(@Param('id', ParseIntPipe) postId: number) {
     return this.postService.deletePost(postId);
+  }
+
+  @UseGuards(MyJwtGuard)
+  @Post('comments')
+  commentPost(
+    @GetUser('id', ParseIntPipe) userId: number,
+    @Body() commentData: CommentDTO,
+  ) {
+    return this.postService.commentPost(userId, commentData);
+  }
+
+  @UseGuards(MyJwtGuard)
+  @Get('comments/:postId')
+  getCommentsWithId(@Param('postId', ParseIntPipe) postId: number) {
+    return this.postService.getAllCommentWithPostId(postId);
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InsetPostDTO, UpdatePostDTO } from './dto';
+import { CommentDTO, InsetPostDTO, UpdatePostDTO } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PostDTO } from './dto/post.dto';
 
@@ -26,11 +26,15 @@ export class PostService {
             image: true,
             firstName: true,
             lastName: true,
+            slug: true,
           },
         });
         const comment = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
+          },
+          orderBy: {
+            id: 'desc',
           },
         });
         let userComment = null;
@@ -44,6 +48,7 @@ export class PostService {
               image: true,
               firstName: true,
               lastName: true,
+              slug: true,
             },
           });
         }
@@ -82,6 +87,7 @@ export class PostService {
             image: true,
             firstName: true,
             lastName: true,
+            slug: true,
           },
         });
         const comment = await this.prismaService.comment.findFirst({
@@ -89,6 +95,7 @@ export class PostService {
             postId: post.id,
           },
         });
+
         let userComment = null;
         if (comment) {
           userComment = await this.prismaService.user.findFirst({
@@ -100,6 +107,7 @@ export class PostService {
               image: true,
               firstName: true,
               lastName: true,
+              slug: true,
             },
           });
         }
@@ -188,7 +196,72 @@ export class PostService {
     //   message: 'Đã ẩn bài viết ' + updatePostDTO.postId,
     // };
     console.log(post);
-    
+
     return post;
+  }
+
+  async commentPost(userId: number, commentData: CommentDTO) {
+    try {
+      const { postId } = commentData;
+      const comment = await this.prismaService.comment.create({
+        data: {
+          userId,
+          ...commentData,
+        },
+      });
+      const post = await this.prismaService.post.findFirst({
+        where: {
+          id: postId,
+        },
+      });
+
+      post.comment++;
+
+      await this.prismaService.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          ...post,
+        },
+      });
+      return comment;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getAllCommentWithPostId(postId: any) {
+    try {
+      const comments = await this.prismaService.comment.findMany({
+        where: {
+          postId: postId,
+        },
+        take: 30,
+      });
+
+      const commentsPromises = comments.map(async (comment: CommentDTO) => {
+        const user = await this.prismaService.user.findUnique({
+          where: {
+            id: comment.userId,
+          },
+          select: {
+            email: true,
+            image: true,
+            firstName: true,
+            lastName: true,
+            slug: true,
+          },
+        });
+
+        return {
+          ...comment,
+          user: { ...user },
+        };
+      });
+
+      const res = await Promise.all(commentsPromises);
+      return res;
+    } catch (error) {}
   }
 }
