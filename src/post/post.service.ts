@@ -226,22 +226,7 @@ export class PostService {
         id: updatePostDTO.postId,
       },
     });
-    // if (!post.hides || !Array.isArray(post.hides)) {
-    //   post.hides = [];
-    // }
-    // post.hides.push(userId);
-    // await this.prismaService.post.update({
-    //   where: {
-    //     id: updatePostDTO.postId,
-    //   },
-    //   data: {
-    //     ...post,
-    //   },
-    // });
-    // return {
-    //   status: 200,
-    //   message: 'Đã ẩn bài viết ' + updatePostDTO.postId,
-    // };
+    //
     console.log(post);
 
     return post;
@@ -312,21 +297,62 @@ export class PostService {
     } catch (error) {}
   }
 
-  async addStatusPost(userId: number, data: { postId: number; type: string }) {
-    const post = await this.prismaService.post.findUnique({
-      where: {
-        id: data.postId,
-      },
-    });
-    const interactKeys = ['likes', 'hahas', 'dears', 'angrys', 'wows', 'sads'];
-    for (const key of interactKeys) {
-      if (!post[key].length) continue;
-      const isValid = post[key].includes(userId);
-      if (isValid) {
-        post[key] = post[key].filter((item) => item != userId);
+  async addStatusPost(userId: number, body: { postId: number; type: string }) {
+    try {
+      const post = await this.prismaService.post.findFirst({
+        where: {
+          id: body.postId,
+        },
+      });
+
+      const interactKeys = [
+        'likes',
+        'hahas',
+        'dears',
+        'angrys',
+        'wows',
+        'sads',
+      ];
+      for (const key of interactKeys) {
+        if (!post[key].length) continue;
+        const isValid = post[key].includes(userId);
+        if (isValid) {
+          post[key] = post[key].filter((item: number) => item != userId);
+        }
       }
+      post[body.type].push(userId);
+
+      await this.prismaService.post.update({
+        where: {
+          id: body.postId,
+        },
+        data: {
+          ...post,
+        },
+      });
+      return {
+        status: 200,
+        data: {
+          id: post.id,
+          description: post.description,
+          images: post.images,
+          like: post.likes.length,
+          haha: post.hahas.length,
+          dear: post.dears.length,
+          angry: post.angrys.length,
+          wow: post.wows.length,
+          sad: post.sads.length,
+          share: post.share,
+          comment: post.comment,
+          type: post.type,
+          background: post.background,
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt,
+          userId: post.userId,
+        },
+      };
+    } catch (error) {
+      return error;
     }
-    post[data.type].push(userId);
-    return post;
   }
 }

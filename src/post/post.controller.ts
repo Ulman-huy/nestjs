@@ -83,11 +83,12 @@ export class PostController {
     return this.postService.getAllCommentWithPostId(postId);
   }
 
+  @UseGuards(MyJwtGuard)
   @Post('status')
   addStatusPost(
     @GetUser('id', ParseIntPipe) userId: number,
-    @Body() { type, postId },
+    @Body() body: { type: string; postId: number },
   ) {
-    return this.postService.addStatusPost(userId, { type, postId });
+    return this.postService.addStatusPost(userId, body);
   }
 }
