@@ -4,8 +4,7 @@ export class CommentDTO {
   @IsNotEmpty()
   postId: number;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsOptional()
   description: string;
 
   @IsOptional()
@@ -30,7 +29,7 @@ export class CommentDTO {
   sads?: number[];
 
   @IsOptional()
-  share?: number[];
+  share?: number;
 
   @IsOptional()
   userId?: number;

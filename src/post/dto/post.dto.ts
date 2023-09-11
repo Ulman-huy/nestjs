@@ -9,8 +9,10 @@ export type PostDTO = {
   angrys: number[];
   wows: number[];
   sads: number[];
-  share: number[];
+  share: number;
   comment: number;
   type: string;
   background: string;
+  createdAt: Date;
+  updatedAt: Date;
 };

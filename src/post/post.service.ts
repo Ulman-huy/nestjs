@@ -54,7 +54,21 @@ export class PostService {
         }
 
         return {
-          ...post,
+          id: post.id,
+          description: post.description,
+          images: post.images,
+          like: post.likes.length,
+          haha: post.hahas.length,
+          dear: post.dears.length,
+          angry: post.angrys.length,
+          wow: post.wows.length,
+          sad: post.sads.length,
+          share: post.share,
+          comment: post.comment,
+          type: post.type,
+          background: post.background,
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt,
           user: { ...user },
           commentPrivew: { ...comment, user: userComment },
         };
@@ -111,9 +125,24 @@ export class PostService {
             },
           });
         }
-
+        const interact = await this.findInteract(userId, post);
         return {
-          ...post,
+          id: post.id,
+          description: post.description,
+          images: post.images,
+          like: post.likes.length,
+          haha: post.hahas.length,
+          dear: post.dears.length,
+          angry: post.angrys.length,
+          wow: post.wows.length,
+          sad: post.sads.length,
+          share: post.share,
+          comment: post.comment,
+          type: post.type,
+          background: post.background,
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt,
+          interact: interact,
           user: { ...user },
           commentPrivew: { ...comment, user: userComment },
         };
@@ -134,6 +163,24 @@ export class PostService {
       },
     });
     return post;
+  }
+
+  findInteract(userId: number, post: PostDTO) {
+    let isInteract = false;
+    let action = '';
+    const interactKeys = ['likes', 'hahas', 'dears', 'angrys', 'wows', 'sads'];
+    for (const key of interactKeys) {
+      const isValid = post[key].includes(userId);
+      if (isValid) {
+        isInteract = true;
+        action = key;
+        break; // Exit the loop once a valid interaction is found.
+      }
+    }
+    return {
+      isInteract,
+      action,
+    };
   }
 
   async insertPost(userId: number, insertPostDTO: InsetPostDTO) {
@@ -263,5 +310,23 @@ export class PostService {
       const res = await Promise.all(commentsPromises);
       return res;
     } catch (error) {}
+  }
+
+  async addStatusPost(userId: number, data: { postId: number; type: string }) {
+    const post = await this.prismaService.post.findUnique({
+      where: {
+        id: data.postId,
+      },
+    });
+    const interactKeys = ['likes', 'hahas', 'dears', 'angrys', 'wows', 'sads'];
+    for (const key of interactKeys) {
+      if (!post[key].length) continue;
+      const isValid = post[key].includes(userId);
+      if (isValid) {
+        post[key] = post[key].filter((item) => item != userId);
+      }
+    }
+    post[data.type].push(userId);
+    return post;
   }
 }

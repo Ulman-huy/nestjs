@@ -82,4 +82,12 @@ export class PostController {
   getCommentsWithId(@Param('postId', ParseIntPipe) postId: number) {
     return this.postService.getAllCommentWithPostId(postId);
   }
+
+  @Post('status')
+  addStatusPost(
+    @GetUser('id', ParseIntPipe) userId: number,
+    @Body() { type, postId },
+  ) {
+    return this.postService.addStatusPost(userId, { type, postId });
+  }
 }
