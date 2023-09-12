@@ -52,7 +52,7 @@ export class PostService {
             },
           });
         }
-
+        // const inter
         return {
           id: post.id,
           description: post.description,
@@ -61,6 +61,7 @@ export class PostService {
           haha: post.hahas.length,
           dear: post.dears.length,
           angry: post.angrys.length,
+          heart: post.hearts.length,
           wow: post.wows.length,
           sad: post.sads.length,
           share: post.share,
@@ -70,7 +71,23 @@ export class PostService {
           createdAt: post.createdAt,
           updatedAt: post.updatedAt,
           user: { ...user },
-          commentPrivew: { ...comment, user: userComment },
+          commentPrivew: {
+            id: comment.id,
+            description: comment.description,
+            images: comment.image,
+            like: comment.likes.length,
+            haha: comment.hahas.length,
+            dear: comment.dears.length,
+            angry: comment.angrys.length,
+            heart: comment.hearts.length,
+            wow: comment.wows.length,
+            sad: comment.sads.length,
+            createdAt: comment.createdAt,
+            updatedAt: comment.updatedAt,
+            userId: comment.userId,
+            postId: comment.postId,
+            user: userComment,
+          },
         };
       });
 
@@ -104,12 +121,13 @@ export class PostService {
             slug: true,
           },
         });
-        const comment = await this.prismaService.comment.findFirst({
+        const comment: any = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
           },
         });
-
+        const interact = await this.findInteract(userId, post);
+        // const interactComment = await this.findInteractComment(userId, comment);
         let userComment = null;
         if (comment) {
           userComment = await this.prismaService.user.findFirst({
@@ -124,28 +142,67 @@ export class PostService {
               slug: true,
             },
           });
+
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            heart: post.hearts.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            interact: interact,
+            user: { ...user },
+            commentPrivew: {
+              id: comment.id,
+              description: comment.description,
+              images: comment.image,
+              like: comment.likes.length,
+              haha: comment.hahas.length,
+              dear: comment.dears.length,
+              angry: comment.angrys.length,
+              heart: comment.hearts.length,
+              wow: comment.wows.length,
+              sad: comment.sads.length,
+              createdAt: comment.createdAt,
+              updatedAt: comment.updatedAt,
+              // interact: interactComment,
+              userId: comment.userId,
+              postId: comment.postId,
+              user: userComment,
+            },
+          };
+        } else {
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            heart: post.hearts.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            interact: interact,
+            user: { ...user },
+          };
         }
-        const interact = await this.findInteract(userId, post);
-        return {
-          id: post.id,
-          description: post.description,
-          images: post.images,
-          like: post.likes.length,
-          haha: post.hahas.length,
-          dear: post.dears.length,
-          angry: post.angrys.length,
-          wow: post.wows.length,
-          sad: post.sads.length,
-          share: post.share,
-          comment: post.comment,
-          type: post.type,
-          background: post.background,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt,
-          interact: interact,
-          user: { ...user },
-          commentPrivew: { ...comment, user: userComment },
-        };
       });
 
       const res = await Promise.all(postPromises);
@@ -165,12 +222,29 @@ export class PostService {
     return post;
   }
 
-  findInteract(userId: number, post: PostDTO) {
+  findInteract(userId: number, data: PostDTO) {
+    let isInteract = false;
+    let action = '';
+    const interactKeys = ['likes', 'hahas', 'dears','hearts', 'angrys', 'wows', 'sads'];
+    for (const key of interactKeys) {
+      const isValid = data[key]?.includes(userId);
+      if (isValid) {
+        isInteract = true;
+        action = key;
+        break; // Exit the loop once a valid interaction is found.
+      }
+    }
+    return {
+      isInteract,
+      action,
+    };
+  }
+  findInteractComment(userId: number, data: CommentDTO) {
     let isInteract = false;
     let action = '';
     const interactKeys = ['likes', 'hahas', 'dears', 'angrys', 'wows', 'sads'];
     for (const key of interactKeys) {
-      const isValid = post[key].includes(userId);
+      const isValid = !!data[key] ? data[key]?.includes(userId) : null;
       if (isValid) {
         isInteract = true;
         action = key;
@@ -349,6 +423,65 @@ export class PostService {
           createdAt: post.createdAt,
           updatedAt: post.updatedAt,
           userId: post.userId,
+        },
+      };
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async addStatusComment(
+    userId: number,
+    body: { commentId: number; type: string },
+  ) {
+    try {
+      const comment = await this.prismaService.comment.findFirst({
+        where: {
+          id: body.commentId,
+        },
+      });
+
+      const interactKeys = [
+        'likes',
+        'hahas',
+        'dears',
+        'angrys',
+        'wows',
+        'sads',
+      ];
+      for (const key of interactKeys) {
+        if (!comment[key].length) continue;
+        const isValid = comment[key].includes(userId);
+        if (isValid) {
+          comment[key] = comment[key].filter((item: number) => item != userId);
+        }
+      }
+      comment[body.type].push(userId);
+
+      await this.prismaService.comment.update({
+        where: {
+          id: body.commentId,
+        },
+        data: {
+          ...comment,
+        },
+      });
+      return {
+        status: 200,
+        data: {
+          id: comment.id,
+          description: comment.description,
+          images: comment.image,
+          like: comment.likes.length,
+          haha: comment.hahas.length,
+          dear: comment.dears.length,
+          angry: comment.angrys.length,
+          wow: comment.wows.length,
+          sad: comment.sads.length,
+          share: comment.share,
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt,
+          userId: comment.userId,
         },
       };
     } catch (error) {

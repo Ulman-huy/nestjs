@@ -43,6 +43,7 @@ model Post {
   wows        Int[]     @default([])
   sads        Int[]     @default([])
   hides       Int[]     @default([])
+  hearts      Int[]     @default([])
   share       Int?      @default(0)
   comment     Int?      @default(0)
   type        String?   @default("DEFAULT")
@@ -67,8 +68,10 @@ model Comment {
   dears       Int[]    @default([])
   angrys      Int[]    @default([])
   wows        Int[]    @default([])
+  hearts      Int[]    @default([])
   sads        Int[]    @default([])
   share       Int?     @default(0)
+  feedback    Int[]    @default([])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

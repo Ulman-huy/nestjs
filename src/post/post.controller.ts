@@ -91,4 +91,13 @@ export class PostController {
   ) {
     return this.postService.addStatusPost(userId, body);
   }
+
+  @UseGuards(MyJwtGuard)
+  @Post('comments/status')
+  addStatusComments(
+    @GetUser('id', ParseIntPipe) userId: number,
+    @Body() body: { type: string; commentId: number },
+  ) {
+    return this.postService.addStatusComment(userId, body);
+  }
 }

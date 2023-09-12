@@ -8,6 +8,7 @@ export type PostDTO = {
   dears: number[];
   angrys: number[];
   wows: number[];
+  hearts: number[];
   sads: number[];
   share: number;
   comment: number;
