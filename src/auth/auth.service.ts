@@ -37,16 +37,6 @@ export class AuthService {
 
     const token = await this.signJwtToken(user.id, user.email);
 
-    await this.prismaService.user.update({
-      where: {
-        email: authDTO.email,
-      },
-      data: {
-        token: token.refreshToken,
-        userId: user.id,
-      },
-    });
-
     return token;
   }
   async login(authDTO: AuthDTO) {
@@ -68,15 +58,6 @@ export class AuthService {
     }
     delete user.hashedPassword;
     const token = await this.signJwtToken(user.id, user.email);
-    await this.prismaService.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        token: token.refreshToken,
-        userId: user.id,
-      },
-    });
 
     return token;
   }

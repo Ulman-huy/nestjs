@@ -7,7 +7,6 @@ async function bootstrap() {
 
   // Add middleware
   app.useGlobalPipes(new ValidationPipe());
-  // Node CRON
   
   await app.listen(3000, () => console.log('Server is re-started...!'));
 }

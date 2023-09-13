@@ -28,7 +28,6 @@ model User {
   // relationship
   posts          Post[]
   comments       Comment[]
-  RefreshToken   RefreshToken[]
 
   @@map("user")
 }
@@ -82,12 +81,4 @@ model Comment {
   user   User @relation(fields: [userId], references: [id])
 
   @@map("comment")
-}
-
-model RefreshToken {
-  id             Int      @id @default(autoincrement())
-  token          String   @db.VarChar(255)
-  user           User     @relation(fields: [userId], references: [id])
-  userId         Int
-  expirationDate DateTime @db.Timestamptz
 }
