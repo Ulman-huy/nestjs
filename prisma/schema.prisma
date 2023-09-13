@@ -11,24 +11,24 @@ datasource db {
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
-  email          String    @unique
-  slug           String?   @default(uuid())
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  slug           String?        @default(uuid())
   hashedPassword String
   firstName      String?
   lastName       String?
-  fullName       String?   
+  fullName       String?
   image          String?
   bio            String?
   location       String?
   friends        String[]
   birthday       DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   // relationship
   posts          Post[]
   comments       Comment[]
-  refreshToken   String?
+  RefreshToken   RefreshToken[]
 
   @@map("user")
 }
@@ -82,4 +82,12 @@ model Comment {
   user   User @relation(fields: [userId], references: [id])
 
   @@map("comment")
+}
+
+model RefreshToken {
+  id             Int      @id @default(autoincrement())
+  token          String   @db.VarChar(255)
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+  expirationDate DateTime @db.Timestamptz
 }

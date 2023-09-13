@@ -11,5 +11,5 @@ export class AuthDTO {
   @IsNotEmpty()
   password: string;
 
-  refreshToken: string;
+  token: string;
 }

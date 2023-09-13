@@ -39,10 +39,11 @@ export class AuthService {
 
     await this.prismaService.user.update({
       where: {
-        id: user.id,
+        email: authDTO.email,
       },
       data: {
-        refreshToken: token.refreshToken,
+        token: token.refreshToken,
+        userId: user.id,
       },
     });
 
@@ -72,7 +73,8 @@ export class AuthService {
         id: user.id,
       },
       data: {
-        refreshToken: token.refreshToken,
+        token: token.refreshToken,
+        userId: user.id,
       },
     });
 
