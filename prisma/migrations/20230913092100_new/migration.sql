@@ -14,6 +14,7 @@ CREATE TABLE "user" (
     "birthday" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "refreshToken" TEXT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );

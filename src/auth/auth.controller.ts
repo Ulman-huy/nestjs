@@ -19,6 +19,16 @@ export class AuthController {
     return this.authService.login(body);
   }
 
+  @Post('logout')
+  logout(@Body() body: AuthDTO) {
+    return this.authService.logout(body);
+  }
+
+  @Post('refresh-token')
+  refreshToken(@Body() body: AuthDTO) {
+    return this.authService.refreshToken(body);
+  }
+  
   @Post('uploads')
   @UseInterceptors(FileInterceptor('file', {
     storage: diskStorage({

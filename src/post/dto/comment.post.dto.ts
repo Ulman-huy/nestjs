@@ -7,6 +7,7 @@ export type CommentDTO = {
   dears?: number[];
   angrys?: number[];
   wows?: number[];
+  hearts?: number[];
   sads?: number[];
   share?: number;
   userId?: number;

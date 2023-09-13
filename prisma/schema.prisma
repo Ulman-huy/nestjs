@@ -17,7 +17,7 @@ model User {
   hashedPassword String
   firstName      String?
   lastName       String?
-  fullName       String?
+  fullName       String?   
   image          String?
   bio            String?
   location       String?
@@ -28,6 +28,7 @@ model User {
   // relationship
   posts          Post[]
   comments       Comment[]
+  refreshToken   String?
 
   @@map("user")
 }

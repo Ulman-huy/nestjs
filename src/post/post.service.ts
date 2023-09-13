@@ -51,44 +51,64 @@ export class PostService {
               slug: true,
             },
           });
+
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            heart: post.hearts.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            user: { ...user },
+            commentPreview: {
+              id: comment.id,
+              description: comment.description,
+              images: comment.image,
+              like: comment.likes.length,
+              haha: comment.hahas.length,
+              dear: comment.dears.length,
+              angry: comment.angrys.length,
+              heart: comment.hearts.length,
+              wow: comment.wows.length,
+              sad: comment.sads.length,
+              createdAt: comment.createdAt,
+              updatedAt: comment.updatedAt,
+              userId: comment.userId,
+              postId: comment.postId,
+              user: userComment,
+            },
+          };
+        } else {
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            heart: post.hearts.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            user: { ...user },
+          };
         }
-        // const inter
-        return {
-          id: post.id,
-          description: post.description,
-          images: post.images,
-          like: post.likes.length,
-          haha: post.hahas.length,
-          dear: post.dears.length,
-          angry: post.angrys.length,
-          heart: post.hearts.length,
-          wow: post.wows.length,
-          sad: post.sads.length,
-          share: post.share,
-          comment: post.comment,
-          type: post.type,
-          background: post.background,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt,
-          user: { ...user },
-          commentPrivew: {
-            id: comment.id,
-            description: comment.description,
-            images: comment.image,
-            like: comment.likes.length,
-            haha: comment.hahas.length,
-            dear: comment.dears.length,
-            angry: comment.angrys.length,
-            heart: comment.hearts.length,
-            wow: comment.wows.length,
-            sad: comment.sads.length,
-            createdAt: comment.createdAt,
-            updatedAt: comment.updatedAt,
-            userId: comment.userId,
-            postId: comment.postId,
-            user: userComment,
-          },
-        };
       });
 
       const res = await Promise.all(postPromises);
@@ -126,10 +146,15 @@ export class PostService {
             postId: post.id,
           },
         });
+
         const interact = await this.findInteract(userId, post);
-        // const interactComment = await this.findInteractComment(userId, comment);
         let userComment = null;
         if (comment) {
+          const interactComment = await this.findInteractComment(
+            userId,
+            comment,
+          );
+
           userComment = await this.prismaService.user.findFirst({
             where: {
               id: comment.userId,
@@ -162,7 +187,7 @@ export class PostService {
             updatedAt: post.updatedAt,
             interact: interact,
             user: { ...user },
-            commentPrivew: {
+            commentPreview: {
               id: comment.id,
               description: comment.description,
               images: comment.image,
@@ -175,7 +200,7 @@ export class PostService {
               sad: comment.sads.length,
               createdAt: comment.createdAt,
               updatedAt: comment.updatedAt,
-              // interact: interactComment,
+              interact: { ...interactComment },
               userId: comment.userId,
               postId: comment.postId,
               user: userComment,
@@ -225,13 +250,20 @@ export class PostService {
   findInteract(userId: number, data: PostDTO) {
     let isInteract = false;
     let action = '';
-    const interactKeys = ['likes', 'hahas', 'dears','hearts', 'angrys', 'wows', 'sads'];
+    const interactKeys = [
+      'likes',
+      'hahas',
+      'dears',
+      'hearts',
+      'angrys',
+      'wows',
+      'sads',
+    ];
     for (const key of interactKeys) {
-      const isValid = data[key]?.includes(userId);
-      if (isValid) {
+      if (data[key] && data[key].includes(userId)) {
         isInteract = true;
         action = key;
-        break; // Exit the loop once a valid interaction is found.
+        break;
       }
     }
     return {
@@ -242,13 +274,20 @@ export class PostService {
   findInteractComment(userId: number, data: CommentDTO) {
     let isInteract = false;
     let action = '';
-    const interactKeys = ['likes', 'hahas', 'dears', 'angrys', 'wows', 'sads'];
+    const interactKeys = [
+      'likes',
+      'hahas',
+      'dears',
+      'angrys',
+      'wows',
+      'sads',
+      'hearts',
+    ];
     for (const key of interactKeys) {
-      const isValid = !!data[key] ? data[key]?.includes(userId) : null;
-      if (isValid) {
+      if (data[key] && data[key].includes(userId)) {
         isInteract = true;
         action = key;
-        break; // Exit the loop once a valid interaction is found.
+        break;
       }
     }
     return {
@@ -386,6 +425,7 @@ export class PostService {
         'angrys',
         'wows',
         'sads',
+        'hearts',
       ];
       for (const key of interactKeys) {
         if (!post[key].length) continue;
@@ -423,6 +463,7 @@ export class PostService {
           createdAt: post.createdAt,
           updatedAt: post.updatedAt,
           userId: post.userId,
+          interact: { isInteract: true, action: body.type },
         },
       };
     } catch (error) {
@@ -448,6 +489,7 @@ export class PostService {
         'angrys',
         'wows',
         'sads',
+        'hearts',
       ];
       for (const key of interactKeys) {
         if (!comment[key].length) continue;
@@ -482,6 +524,7 @@ export class PostService {
           createdAt: comment.createdAt,
           updatedAt: comment.updatedAt,
           userId: comment.userId,
+          interact: { isInteract: true, action: body.type },
         },
       };
     } catch (error) {
