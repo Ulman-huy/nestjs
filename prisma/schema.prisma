@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User {
-  id             Int            @id @default(autoincrement())
-  email          String         @unique
-  slug           String?        @default(uuid())
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  slug           String?   @default(uuid())
   hashedPassword String
   firstName      String?
   lastName       String?
@@ -23,11 +23,12 @@ model User {
   location       String?
   friends        String[]
   birthday       DateTime?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   // relationship
-  posts          Post[]
-  comments       Comment[]
+  posts     Post[]
+  comments  Comment[]
 
   @@map("user")
 }

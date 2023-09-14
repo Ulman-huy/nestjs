@@ -1,9 +1,14 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import * as argon from 'argon2';
 import { AuthDTO } from './dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { compareSync, hashSync, genSaltSync } from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +18,6 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
   async register(authDTO: AuthDTO) {
-    const hashPassword = await argon.hash(authDTO.password);
     const userExiting = await this.prismaService.user.findFirst({
       where: {
         email: authDTO.email,
@@ -22,10 +26,13 @@ export class AuthService {
     if (userExiting) {
       throw new ForbiddenException('Email đã tồn tại!');
     }
+    const salt = genSaltSync(10);
+    const hashedPassword = hashSync(authDTO.password, salt);
+
     const user = await this.prismaService.user.create({
       data: {
         email: authDTO.email,
-        hashedPassword: hashPassword,
+        hashedPassword,
         lastName: '',
         firstName: '',
       },
@@ -48,21 +55,39 @@ export class AuthService {
     if (!user) {
       throw new ForbiddenException('Tài khoản email không tồn tại!');
     }
-    const passwordMatched = await argon.verify(
-      user.hashedPassword,
-      authDTO.password,
-    );
+    const passwordMatched = compareSync(authDTO.password, user.hashedPassword);
 
     if (!passwordMatched) {
       throw new ForbiddenException('Tài khoản hoặc mật khẩu không chính xác!');
     }
-    delete user.hashedPassword;
     const token = await this.signJwtToken(user.id, user.email);
-
+    delete user.hashedPassword;
     return token;
   }
+  
   async logout(data: any) {}
-  async refreshToken(data: any) {}
+
+  async refreshToken(body: any) {
+    try {
+      const refreshToken = body.refreshToken;
+      const payload = await this.jwtService.verify(refreshToken, {
+        secret: this.configService.get('REFRESH_SECRET_KEY'),
+      });
+      const newAccessToken = await this.jwtService.signAsync(
+        { sub: payload.sub, email: payload.email },
+        {
+          secret: this.configService.get('SECRET_KEY'),
+          expiresIn: '60s',
+        },
+      );
+      console.log({ refreshToken, payload, newAccessToken });
+      return {
+        accessToken: newAccessToken,
+      };
+    } catch (error) {
+      throw new HttpException('Invalid Token!', 403);
+    }
+  }
 
   async signJwtToken(
     userId: number,

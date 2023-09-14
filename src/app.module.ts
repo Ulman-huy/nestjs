@@ -4,7 +4,6 @@ import { UserModule } from './user/user.module';
 import { Module } from '@nestjs/common';
 import { PostModule } from './post/post.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { TaskService } from './task/task.service';
 
 @Module({
   imports: [
@@ -17,6 +16,5 @@ import { TaskService } from './task/task.service';
       cache: true,
     }),
   ],
-  exports: [TaskService],
 })
 export class AppModule {}
