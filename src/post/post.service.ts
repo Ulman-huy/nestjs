@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommentDTO, InsetPostDTO, UpdatePostDTO } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PostDTO } from './dto/post.dto';
+import { AuthDTO } from 'src/auth/dto';
 
 @Injectable({})
 export class PostService {
@@ -385,6 +386,7 @@ export class PostService {
       const comments = await this.prismaService.comment.findMany({
         where: {
           postId: postId,
+          type: 'DEFAULT',
         },
         take: 30,
       });
@@ -416,6 +418,7 @@ export class PostService {
           angry: comment.angrys.length,
           dear: comment.dears.length,
           haha: comment.hahas.length,
+          type: comment.type,
           heart: comment.hearts.length,
           like: comment.likes.length,
           wow: comment.wows.length,
@@ -552,22 +555,57 @@ export class PostService {
   }
 
   async getCommentFeedBack(commentId: number) {
-    const comment = await this.prismaService.comment.findFirst({
-      where: {
-        id: commentId,
-      },
-    });
-    if (!comment) {
-      // Handle the case where the comment with the specified ID does not exist
-      return [];
-    }
-    const comments = await this.prismaService.comment.findMany({
-      where: {
-        id: {
-          in: comment.feedback,
+    try {
+      const comment = await this.prismaService.comment.findFirst({
+        where: {
+          id: commentId,
         },
-      },
-    });
-    return comments;
+      });
+      const comments = await this.prismaService.comment.findMany({
+        where: {
+          id: {
+            in: comment.feedback,
+          },
+        },
+      });
+      const commentPromises = comments.map(async (comment: CommentDTO) => {
+        const user = await this.prismaService.user.findUnique({
+          where: {
+            id: comment.userId,
+          },
+          // select: {
+          //   email: true,
+          //   image: true,
+          //   firstName: true,
+          //   lastName: true,
+          //   slug: true,
+          // },
+        });
+        return {
+          id: comment.id,
+          postId: comment.postId,
+          description: comment.description,
+          image: comment.image,
+          like: comment.likes.length,
+          haha: comment.hahas.length,
+          dear: comment.dears.length,
+          angry: comment.angrys.length,
+          wow: comment.wows.length,
+          heart: comment.hearts.length,
+          sad: comment.sads.length,
+          type: comment.type,
+          feedback: comment.feedback.length,
+          share: comment.share,
+          userId: comment.userId,
+          updatedAt: comment.updatedAt,
+          createdAt: comment.createdAt,
+          user,
+        };
+      });
+      const res = await Promise.all(commentPromises);
+      return res;
+    } catch (err) {
+      return err;
+    }
   }
 }

@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { MyJwtGuard } from '../auth/guard';
@@ -102,8 +103,8 @@ export class PostController {
   }
 
   @UseGuards(MyJwtGuard)
-  @Post('comments/status')
+  @Get('comments/feedback/:id')
   getCommentFeedBack(@Param('id', ParseIntPipe) commentId: number) {
-    return this.postService.getCommentFeedBack(commentId)
+    return this.postService.getCommentFeedBack(commentId);
   }
 }
