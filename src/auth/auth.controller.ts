@@ -36,9 +36,9 @@ export class AuthController {
     return this.authService.logout(body);
   }
 
-  @Post('refresh-token')
-  refreshToken(@Body() body: any) {
-    return this.authService.refreshToken(body);
+  @Post('refresh')
+  refreshToken(@Body() { refreshToken }: any) {
+    return this.authService.refreshToken(refreshToken);
   }
 
   @Post('uploads')

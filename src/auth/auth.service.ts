@@ -16,7 +16,9 @@ export class AuthService {
     private prismaService: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {}
+  ) {
+    const refreshKey = this.configService.get('REFRESH_SECRET_KEY');
+  }
   async register(authDTO: AuthDTO) {
     const userExiting = await this.prismaService.user.findFirst({
       where: {
@@ -64,23 +66,24 @@ export class AuthService {
     delete user.hashedPassword;
     return token;
   }
-  
+
   async logout(data: any) {}
 
-  async refreshToken(body: any) {
+  async refreshToken(refreshToken: any) {
     try {
-      const refreshToken = body.refreshToken;
-      const payload = await this.jwtService.verify(refreshToken, {
-        secret: this.configService.get('REFRESH_SECRET_KEY'),
+      const refreshKey = this.configService.get('REFRESH_SECRET_KEY');
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: refreshKey,
+        algorithms: ['HS256'],
       });
+
       const newAccessToken = await this.jwtService.signAsync(
         { sub: payload.sub, email: payload.email },
         {
           secret: this.configService.get('SECRET_KEY'),
-          expiresIn: '60s',
+          expiresIn: '15m',
         },
       );
-      console.log({ refreshToken, payload, newAccessToken });
       return {
         accessToken: newAccessToken,
       };
@@ -103,7 +106,7 @@ export class AuthService {
 
     const jwtString = await this.jwtService.signAsync(payload, {
       secret: this.configService.get('SECRET_KEY'),
-      expiresIn: '60s',
+      expiresIn: '15m',
     });
     const refreshToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get('REFRESH_SECRET_KEY'),
