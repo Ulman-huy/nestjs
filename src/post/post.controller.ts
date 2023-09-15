@@ -100,4 +100,10 @@ export class PostController {
   ) {
     return this.postService.addStatusComment(userId, body);
   }
+
+  @UseGuards(MyJwtGuard)
+  @Post('comments/status')
+  getCommentFeedBack(@Param('id', ParseIntPipe) commentId: number) {
+    return this.postService.getCommentFeedBack(commentId)
+  }
 }

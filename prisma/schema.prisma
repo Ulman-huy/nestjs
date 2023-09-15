@@ -73,6 +73,7 @@ model Comment {
   sads        Int[]    @default([])
   share       Int?     @default(0)
   feedback    Int[]    @default([])
+  type        String   @default("DEFAULT")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

@@ -1,4 +1,5 @@
 export type CommentDTO = {
+  id: number;
   postId: number;
   description: string;
   image?: string;
@@ -9,6 +10,10 @@ export type CommentDTO = {
   wows?: number[];
   hearts?: number[];
   sads?: number[];
+  type: string;
+  feedback?: number[];
   share?: number;
   userId?: number;
+  updatedAt?: Date;
+  createdAt?: Date;
 };

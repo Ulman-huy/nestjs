@@ -32,6 +32,7 @@ export class PostService {
         const comment = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
+            type: 'DEFAULT',
           },
           orderBy: {
             id: 'desc',
@@ -85,6 +86,7 @@ export class PostService {
               updatedAt: comment.updatedAt,
               userId: comment.userId,
               postId: comment.postId,
+              type: comment.type,
               user: userComment,
             },
           };
@@ -144,6 +146,7 @@ export class PostService {
         const comment: any = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
+            type: 'DEFAULT',
           },
         });
 
@@ -202,6 +205,7 @@ export class PostService {
               updatedAt: comment.updatedAt,
               interact: { ...interactComment },
               userId: comment.userId,
+              type: comment.type,
               postId: comment.postId,
               user: userComment,
             },
@@ -400,7 +404,22 @@ export class PostService {
         });
 
         return {
-          ...comment,
+          id: comment.id,
+          description: comment.description,
+          image: comment.image,
+          share: comment.share,
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt,
+          postId: comment.postId,
+          userId: comment.userId,
+          feedback: comment.feedback,
+          angry: comment.angrys.length,
+          dear: comment.dears.length,
+          haha: comment.hahas.length,
+          heart: comment.hearts.length,
+          like: comment.likes.length,
+          wow: comment.wows.length,
+          sad: comment.sads.length,
           user: { ...user },
         };
       });
@@ -530,5 +549,25 @@ export class PostService {
     } catch (error) {
       return error;
     }
+  }
+
+  async getCommentFeedBack(commentId: number) {
+    const comment = await this.prismaService.comment.findFirst({
+      where: {
+        id: commentId,
+      },
+    });
+    if (!comment) {
+      // Handle the case where the comment with the specified ID does not exist
+      return [];
+    }
+    const comments = await this.prismaService.comment.findMany({
+      where: {
+        id: {
+          in: comment.feedback,
+        },
+      },
+    });
+    return comments;
   }
 }
