@@ -16,9 +16,7 @@ export class AuthService {
     private prismaService: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {
-    const refreshKey = this.configService.get('REFRESH_SECRET_KEY');
-  }
+  ) {}
   async register(authDTO: AuthDTO) {
     const userExiting = await this.prismaService.user.findFirst({
       where: {
@@ -35,8 +33,6 @@ export class AuthService {
       data: {
         email: authDTO.email,
         hashedPassword,
-        lastName: '',
-        firstName: '',
       },
       select: {
         id: true,

@@ -21,14 +21,14 @@ model User {
   image          String?
   bio            String?
   location       String?
-  friends        String[]
+  friends        Int[]
   birthday       DateTime?
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  background     String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   // relationship
-  posts     Post[]
-  comments  Comment[]
+  posts          Post[]
+  comments       Comment[]
 
   @@map("user")
 }

@@ -75,7 +75,7 @@ export class AuthController {
   }
 
   @Get('pictures/:filename')
-  async getPicture(@Param('filename') filename, @Res() res: Response) {
+  async getPicture(@Param('filename') filename: string, @Res() res: Response) {
     res.sendFile(filename, { root: './uploads' });
   }
 }
