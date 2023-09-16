@@ -33,7 +33,7 @@ export class PostService {
         const comment = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
-            // type: 'DEFAULT',
+            type: 'DEFAULT',
           },
           orderBy: {
             id: 'desc',
@@ -147,6 +147,7 @@ export class PostService {
         const comment: any = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
+            type: "DEFAULT"
           },
         });
 
@@ -381,7 +382,7 @@ export class PostService {
       const comments = await this.prismaService.comment.findMany({
         where: {
           postId: postId,
-          // type: 'DEFAULT',
+          type: 'DEFAULT',
         },
         take: 30,
       });
