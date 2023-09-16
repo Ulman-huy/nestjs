@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "comment" ADD COLUMN     "type" TEXT NOT NULL DEFAULT 'DEFAULT';

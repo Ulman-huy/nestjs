@@ -33,14 +33,14 @@ export class PostService {
         const comment = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
-            type: 'DEFAULT',
+            // type: 'DEFAULT',
           },
           orderBy: {
             id: 'desc',
           },
         });
         let userComment = null;
-        if (comment) {
+        if (comment.type != 'DEFAULT') {
           userComment = await this.prismaService.user.findFirst({
             where: {
               id: comment.userId,
@@ -147,19 +147,14 @@ export class PostService {
         const comment: any = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
-            type: 'DEFAULT',
           },
         });
 
-        const interact = await this.findInteract(userId, post);
-        let userComment = null;
-        if (comment) {
-          const interactComment = await this.findInteractComment(
-            userId,
-            comment,
-          );
+        const interact = this.findInteract(userId, post);
+        if (comment.type != 'DEFAULT') {
+          const interactComment = this.findInteractComment(userId, comment);
 
-          userComment = await this.prismaService.user.findFirst({
+          const userComment = await this.prismaService.user.findFirst({
             where: {
               id: comment.userId,
             },
@@ -386,11 +381,11 @@ export class PostService {
       const comments = await this.prismaService.comment.findMany({
         where: {
           postId: postId,
-          type: 'DEFAULT',
+          // type: 'DEFAULT',
         },
         take: 30,
       });
-
+      
       const commentsPromises = comments.map(async (comment: CommentDTO) => {
         const user = await this.prismaService.user.findUnique({
           where: {
@@ -404,7 +399,6 @@ export class PostService {
             slug: true,
           },
         });
-
         return {
           id: comment.id,
           description: comment.description,
@@ -573,13 +567,13 @@ export class PostService {
           where: {
             id: comment.userId,
           },
-          // select: {
-          //   email: true,
-          //   image: true,
-          //   firstName: true,
-          //   lastName: true,
-          //   slug: true,
-          // },
+          select: {
+            email: true,
+            image: true,
+            firstName: true,
+            lastName: true,
+            slug: true,
+          },
         });
         return {
           id: comment.id,
