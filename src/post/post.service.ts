@@ -3,6 +3,7 @@ import { CommentDTO, InsetPostDTO, UpdatePostDTO } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PostDTO } from './dto/post.dto';
 import { AuthDTO } from 'src/auth/dto';
+import { findInteract, findInteractComment } from 'src/utils';
 
 @Injectable({})
 export class PostService {
@@ -40,7 +41,7 @@ export class PostService {
           },
         });
         let userComment = null;
-        if (comment.type != 'DEFAULT') {
+        if (comment) {
           userComment = await this.prismaService.user.findFirst({
             where: {
               id: comment.userId,
@@ -147,13 +148,13 @@ export class PostService {
         const comment: any = await this.prismaService.comment.findFirst({
           where: {
             postId: post.id,
-            type: "DEFAULT"
+            type: 'DEFAULT',
           },
         });
 
-        const interact = this.findInteract(userId, post);
-        if (comment.type != 'DEFAULT') {
-          const interactComment = this.findInteractComment(userId, comment);
+        const interact = findInteract(userId, post);
+        if (comment) {
+          const interactComment = findInteractComment(userId, comment);
 
           const userComment = await this.prismaService.user.findFirst({
             where: {
@@ -248,55 +249,6 @@ export class PostService {
     return post;
   }
 
-  findInteract(userId: number, data: PostDTO) {
-    let isInteract = false;
-    let action = '';
-    const interactKeys = [
-      'likes',
-      'hahas',
-      'dears',
-      'hearts',
-      'angrys',
-      'wows',
-      'sads',
-    ];
-    for (const key of interactKeys) {
-      if (data[key] && data[key].includes(userId)) {
-        isInteract = true;
-        action = key;
-        break;
-      }
-    }
-    return {
-      isInteract,
-      action,
-    };
-  }
-  findInteractComment(userId: number, data: CommentDTO) {
-    let isInteract = false;
-    let action = '';
-    const interactKeys = [
-      'likes',
-      'hahas',
-      'dears',
-      'angrys',
-      'wows',
-      'sads',
-      'hearts',
-    ];
-    for (const key of interactKeys) {
-      if (data[key] && data[key].includes(userId)) {
-        isInteract = true;
-        action = key;
-        break;
-      }
-    }
-    return {
-      isInteract,
-      action,
-    };
-  }
-
   async insertPost(userId: number, insertPostDTO: InsetPostDTO) {
     try {
       const post = await this.prismaService.post.create({
@@ -355,20 +307,14 @@ export class PostService {
           ...commentData,
         },
       });
-      const post = await this.prismaService.post.findFirst({
-        where: {
-          id: postId,
-        },
-      });
-
-      post.comment++;
-
       await this.prismaService.post.update({
         where: {
           id: postId,
         },
         data: {
-          ...post,
+          comment: {
+            increment: 1,
+          },
         },
       });
       return comment;
@@ -386,7 +332,7 @@ export class PostService {
         },
         take: 30,
       });
-      
+
       const commentsPromises = comments.map(async (comment: CommentDTO) => {
         const user = await this.prismaService.user.findUnique({
           where: {
@@ -602,5 +548,34 @@ export class PostService {
     } catch (err) {
       return err;
     }
+  }
+
+  async feedbackComment(
+    userId: number,
+    commentId: number,
+    commentData: CommentDTO,
+  ) {
+    // try {
+    await this.prismaService.comment.update({
+      where: {
+        id: commentId,
+      },
+      data: {
+        feedback: {
+          push: commentId,
+        },
+      },
+    });
+
+    const feedbackComment = await this.prismaService.comment.create({
+      data: {
+        userId,
+        ...commentData,
+      },
+    });
+    return feedbackComment;
+    // } catch (err) {
+    //   return err;
+    // }
   }
 }

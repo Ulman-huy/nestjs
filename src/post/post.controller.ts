@@ -107,4 +107,13 @@ export class PostController {
   getCommentFeedBack(@Param('id', ParseIntPipe) commentId: number) {
     return this.postService.getCommentFeedBack(commentId);
   }
+
+  @UseGuards(MyJwtGuard)
+  @Post('comments/feedback')
+  feedbackComment(
+    @GetUser('id', ParseIntPipe) userId: number,
+    @Body() { commentId, ...commentData }: any,
+  ) {
+    return this.postService.feedbackComment(userId, commentId, commentData);
+  }
 }
