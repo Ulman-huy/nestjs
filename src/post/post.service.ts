@@ -571,6 +571,7 @@ export class PostService {
       data: {
         userId,
         ...commentData,
+        type: "FEEDBACK"
       },
     });
     return feedbackComment;

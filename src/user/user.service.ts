@@ -30,7 +30,9 @@ export class UserService {
     try {
       const user = await this.prismaService.user.findFirst({
         where: {
-          slug: slug,
+          slug: {
+            equals: slug,
+          },
         },
         select: {
           id: true,
@@ -41,6 +43,7 @@ export class UserService {
           slug: true,
         },
       });
+      if (!user) return false;
       const posts = await this.prismaService.post.findMany({
         where: {
           userId: user.id,
@@ -136,7 +139,7 @@ export class UserService {
       });
 
       const res = await Promise.all(postPromises);
-      return res
+      return res;
     } catch (err) {
       return err;
     }

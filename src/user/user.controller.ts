@@ -16,7 +16,7 @@ export class UserController {
   }
 
   @UseGuards(MyJwtGuard)
-  @Get('posts')
+  @Get('posts/:slug')
   getPosts(@Param('slug') slug: string) {
     return this.userService.getPosts(slug);
   }
