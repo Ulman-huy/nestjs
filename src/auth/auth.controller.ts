@@ -47,14 +47,28 @@ export class AuthController {
       storage: diskStorage({
         destination: './uploads',
         filename: (req, file, callback) => {
-          const name = file.originalname.split('.')[0];
-          const fileExtension = file.originalname.split('.')[1];
-          const newFileName =
-            name.split(' ').join('_') + '_' + Date.now() + '.' + fileExtension;
-          callback(null, newFileName);
+          if (file.originalname === 'blob') {
+            const ramdom = Math.round(Math.random() * 10000);
+            const newFileName =
+              'avatar_' + ramdom + '_' + Date.now() + '.' + 'png';
+            callback(null, newFileName);
+          } else {
+            const name = file.originalname.split('.')[0];
+            const fileExtension = file.originalname.split('.')[1];
+            const newFileName =
+              name.split(' ').join('_') +
+              '_' +
+              Date.now() +
+              '.' +
+              fileExtension;
+            callback(null, newFileName);
+          }
         },
       }),
       fileFilter: (req, file, callback) => {
+        if (file.originalname === 'blob') {
+          return callback(null, true);
+        }
         if (!file.originalname.match(/\.(jpg|png|jpeg|gif)$/)) {
           return callback(null, false);
         }

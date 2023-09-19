@@ -144,4 +144,81 @@ export class UserService {
       return err;
     }
   }
+
+  async getInfoUser(slug: string) {
+    try {
+      const user = await this.prismaService.user.findFirst({
+        where: {
+          slug: slug,
+        },
+      });
+      return {
+        id: user.id,
+        email: user.email,
+        slug: user.slug,
+        fullName: user.fullName,
+        image: user.image,
+        bio: user.bio,
+        location: user.location,
+        friend: user.friends.length,
+        birthday: user.birthday,
+        background: user.background,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      };
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async updateAvatar(user: UserDTO, url: string) {
+    try {
+      await this.prismaService.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          image: url,
+        },
+      });
+      return 'OK';
+    } catch (error) {
+      return error;
+    }
+  }
+  async updateBackground(user: UserDTO, url: string) {
+    try {
+      await this.prismaService.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          background: url,
+        },
+      });
+      return 'OK';
+    } catch (error) {
+      return error;
+    }
+  }
+  async getFriends(slug: string) {
+    try {
+      const user = await this.prismaService.user.findFirst({
+        where: {
+          slug: slug,
+        },
+      });
+      const friends = await this.prismaService.user.findMany({
+        where: {
+          id: {
+            in: user.friends,
+          },
+        },
+        take: 9,
+      });
+      return friends;
+    } catch (err) {
+      return err;
+    }
+  }
 }

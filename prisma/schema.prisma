@@ -29,13 +29,14 @@ model User {
   // relationship
   posts          Post[]
   comments       Comment[]
+  Image          Image[]
 
   @@map("user")
 }
 
 model Post {
   id          Int       @id @default(autoincrement())
-  description String
+  description String?   @default("")
   images      String?   @default("")
   likes       Int[]     @default([])
   hahas       Int[]     @default([])
@@ -56,6 +57,7 @@ model Post {
   userId      Int
   comments    Comment[]
   User        User      @relation(fields: [userId], references: [id])
+  Image       Image[]
 
   @@map("post")
 }
@@ -83,4 +85,16 @@ model Comment {
   user   User @relation(fields: [userId], references: [id])
 
   @@map("comment")
+}
+
+model Image {
+  id     Int    @id @default(autoincrement())
+  url    String
+  postId Int?
+
+  userId Int
+  user   User  @relation(fields: [userId], references: [id])
+  Post   Post? @relation(fields: [postId], references: [id])
+
+  @@map("image")
 }

@@ -2,11 +2,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 export class InsetPostDTO {
   userId: number;
-
-  @IsString()
-  @IsNotEmpty()
-  description: string;
-
+  description?: string;
   images?: string;
   likes?: number[];
   hahas?: number[];
