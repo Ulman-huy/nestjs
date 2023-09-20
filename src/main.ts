@@ -8,6 +8,6 @@ async function bootstrap() {
   // Add middleware
   app.useGlobalPipes(new ValidationPipe());
   
-  await app.listen(3000, () => console.log('Server is re-started...!'));
+  await app.listen(4321, () => console.log('Server is re-started...!'));
 }
 bootstrap();
