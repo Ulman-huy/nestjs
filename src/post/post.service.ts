@@ -241,12 +241,52 @@ export class PostService {
   }
 
   async getPostById(postId: number) {
-    const post = await this.prismaService.post.findFirst({
-      where: {
-        id: postId,
-      },
-    });
-    return post;
+    try {
+      const post = await this.prismaService.post.findFirst({
+        where: {
+          id: postId,
+        },
+      });
+      if (post) {
+        const interact = findInteract(post.userId, post);
+        const user = await this.prismaService.user.findUnique({
+          where: {
+            id: post.userId,
+          },
+          select: {
+            slug: true,
+            fullName: true,
+            email: true,
+            image: true,
+          },
+        });
+
+        return {
+          id: post.id,
+          description: post.description,
+          images: post.images,
+          like: post.likes.length,
+          haha: post.hahas.length,
+          dear: post.dears.length,
+          angry: post.angrys.length,
+          wow: post.wows.length,
+          sad: post.sads.length,
+          heart: post.hearts.length,
+          share: post.share,
+          comment: post.comment,
+          type: post.type,
+          background: post.background,
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt,
+          interact: interact,
+          user: { ...user },
+        };
+      }
+
+      return post;
+    } catch (err) {
+      return err;
+    }
   }
 
   async insertPost(userId: number, insertPostDTO: InsetPostDTO) {
@@ -571,7 +611,7 @@ export class PostService {
       data: {
         userId,
         ...commentData,
-        type: "FEEDBACK"
+        type: 'FEEDBACK',
       },
     });
     return feedbackComment;
