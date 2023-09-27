@@ -32,8 +32,8 @@ export class PostController {
 
   @UseGuards(MyJwtGuard)
   @Get(':id')
-  getPostById(@Param('id', ParseIntPipe) id: number) {
-    return this.postService.getPostById(id);
+  getPostById(@GetUser('id', ParseIntPipe) userId: number, @Param('id', ParseIntPipe) id: number) {
+    return this.postService.getPostById(userId, id);
   }
 
   @UseGuards(MyJwtGuard)
@@ -80,8 +80,8 @@ export class PostController {
 
   @UseGuards(MyJwtGuard)
   @Get('comments/:postId')
-  getCommentsWithId(@Param('postId', ParseIntPipe) postId: number) {
-    return this.postService.getAllCommentWithPostId(postId);
+  getCommentsWithId(@GetUser('id', ParseIntPipe) userId: number,@Param('postId', ParseIntPipe) postId: number) {
+    return this.postService.getAllCommentWithPostId(userId, postId);
   }
 
   @UseGuards(MyJwtGuard)

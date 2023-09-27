@@ -20,6 +20,12 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @UseGuards(MyJwtGuard)
+  @Get("friend-suggest")
+  getListUser(@GetUser() user: UserDTO,) {
+    return this.userService.getListUser(user)
+  }
+
+  @UseGuards(MyJwtGuard)
   @Get('me')
   getMe(@GetUser() user: User) {
     return this.userService.getUser(user);
@@ -52,5 +58,11 @@ export class UserController {
   @Get('friends/:slug')
   getFriends(@Param("slug") slug: string) {
     return this.userService.getFriends(slug);
+  }
+
+  @UseGuards(MyJwtGuard)
+  @Get('friends')
+  getListFriend(@GetUser() user: User) {
+    return this.userService.getListFriend(user);
   }
 }

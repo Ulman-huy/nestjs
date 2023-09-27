@@ -26,6 +26,29 @@ export class UserService {
     };
   }
 
+  async getListUser(user: any) {
+    try {
+      const listUser = await this.prismaService.user.findMany({
+        where: {
+          id: {
+            notIn: [...user.friends, user.id],
+          },
+        },
+        take: 36,
+        select: {
+          image: true,
+          fullName: true,
+          slug: true,
+          id: true,
+          email: true,
+        },
+      });
+      return { status: 200, data: listUser };
+    } catch (err) {
+      return err;
+    }
+  }
+
   async getPosts(slug: string) {
     try {
       const user = await this.prismaService.user.findFirst({
@@ -217,6 +240,28 @@ export class UserService {
         take: 9,
       });
       return friends;
+    } catch (err) {
+      return err;
+    }
+  }
+  async getListFriend(user: UserDTO) {
+    try {
+      const listFriend = await this.prismaService.user.findMany({
+        where: {
+          id: {
+            in: user.friends,
+          },
+        },
+        select: {
+          image: true,
+          fullName: true,
+          slug: true,
+          id: true,
+          email: true,
+          friends: true,
+        },
+      });
+      return { status: 200, data: listFriend };
     } catch (err) {
       return err;
     }

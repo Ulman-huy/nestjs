@@ -240,7 +240,7 @@ export class PostService {
     }
   }
 
-  async getPostById(postId: number) {
+  async getPostById(userId: number, postId: number) {
     try {
       const post = await this.prismaService.post.findFirst({
         where: {
@@ -248,7 +248,7 @@ export class PostService {
         },
       });
       if (post) {
-        const interact = findInteract(post.userId, post);
+        const interact = findInteract(userId, post);
         const user = await this.prismaService.user.findUnique({
           where: {
             id: post.userId,
@@ -332,8 +332,6 @@ export class PostService {
         id: updatePostDTO.postId,
       },
     });
-    //
-    console.log(post);
 
     return post;
   }
@@ -363,7 +361,7 @@ export class PostService {
     }
   }
 
-  async getAllCommentWithPostId(postId: any) {
+  async getAllCommentWithPostId(userId:number, postId: any) {
     try {
       const comments = await this.prismaService.comment.findMany({
         where: {
@@ -386,6 +384,7 @@ export class PostService {
             slug: true,
           },
         });
+        const interact = findInteractComment(userId, comment)
         return {
           id: comment.id,
           description: comment.description,
@@ -404,6 +403,7 @@ export class PostService {
           like: comment.likes.length,
           wow: comment.wows.length,
           sad: comment.sads.length,
+          interact: {...interact},
           user: { ...user },
         };
       });
