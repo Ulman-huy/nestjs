@@ -247,6 +247,12 @@ export class PostService {
           id: postId,
         },
       });
+      const comment: any = await this.prismaService.comment.findFirst({
+        where: {
+          postId: post.id,
+          type: 'DEFAULT',
+        },
+      });
       if (post) {
         const interact = findInteract(userId, post);
         const user = await this.prismaService.user.findUnique({
@@ -260,30 +266,187 @@ export class PostService {
             image: true,
           },
         });
-
-        return {
-          id: post.id,
-          description: post.description,
-          images: post.images,
-          like: post.likes.length,
-          haha: post.hahas.length,
-          dear: post.dears.length,
-          angry: post.angrys.length,
-          wow: post.wows.length,
-          sad: post.sads.length,
-          heart: post.hearts.length,
-          share: post.share,
-          comment: post.comment,
-          type: post.type,
-          background: post.background,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt,
-          interact: interact,
-          user: { ...user },
-        };
+        if (comment) {
+          const interactComment = findInteractComment(userId, comment);
+          const userComment = await this.prismaService.user.findFirst({
+            where: {
+              id: comment.userId,
+            },
+            select: {
+              email: true,
+              image: true,
+              firstName: true,
+              lastName: true,
+              slug: true,
+            },
+          });
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            heart: post.hearts.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            interact: interact,
+            user: { ...user },
+            commentPreview: {
+              id: comment.id,
+              description: comment.description,
+              images: comment.image,
+              like: comment.likes.length,
+              haha: comment.hahas.length,
+              dear: comment.dears.length,
+              angry: comment.angrys.length,
+              heart: comment.hearts.length,
+              wow: comment.wows.length,
+              sad: comment.sads.length,
+              createdAt: comment.createdAt,
+              updatedAt: comment.updatedAt,
+              interact: { ...interactComment },
+              userId: comment.userId,
+              type: comment.type,
+              postId: comment.postId,
+              user: userComment,
+            },
+          };
+        } else {
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            heart: post.hearts.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            interact: interact,
+            user: { ...user },
+          };
+        }
       }
+    } catch (err) {
+      return err;
+    }
+  }
 
-      return post;
+  async getPostNoToken(postId: number) {
+    try {
+      const post = await this.prismaService.post.findFirst({
+        where: {
+          id: postId,
+        },
+      });
+      const comment: any = await this.prismaService.comment.findFirst({
+        where: {
+          postId: post.id,
+          type: 'DEFAULT',
+        },
+      });
+      if (post) {
+        const user = await this.prismaService.user.findUnique({
+          where: {
+            id: post.userId,
+          },
+          select: {
+            slug: true,
+            fullName: true,
+            email: true,
+            image: true,
+          },
+        });
+        if (comment) {
+          const userComment = await this.prismaService.user.findFirst({
+            where: {
+              id: comment.userId,
+            },
+            select: {
+              email: true,
+              image: true,
+              firstName: true,
+              lastName: true,
+              slug: true,
+            },
+          });
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            heart: post.hearts.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            interact: null,
+            user: { ...user },
+            commentPreview: {
+              id: comment.id,
+              description: comment.description,
+              images: comment.image,
+              like: comment.likes.length,
+              haha: comment.hahas.length,
+              dear: comment.dears.length,
+              angry: comment.angrys.length,
+              heart: comment.hearts.length,
+              wow: comment.wows.length,
+              sad: comment.sads.length,
+              createdAt: comment.createdAt,
+              updatedAt: comment.updatedAt,
+              interact: null,
+              userId: comment.userId,
+              type: comment.type,
+              postId: comment.postId,
+              user: userComment,
+            },
+          };
+        } else {
+          return {
+            id: post.id,
+            description: post.description,
+            images: post.images,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            heart: post.hearts.length,
+            share: post.share,
+            comment: post.comment,
+            type: post.type,
+            background: post.background,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+            interact: null,
+            user: { ...user },
+          };
+        }
+      }
     } catch (err) {
       return err;
     }
@@ -361,7 +524,7 @@ export class PostService {
     }
   }
 
-  async getAllCommentWithPostId(userId:number, postId: any) {
+  async getAllCommentWithPostId(userId: number, postId: any) {
     try {
       const comments = await this.prismaService.comment.findMany({
         where: {
@@ -384,7 +547,7 @@ export class PostService {
             slug: true,
           },
         });
-        const interact = findInteractComment(userId, comment)
+        const interact = findInteractComment(userId, comment);
         return {
           id: comment.id,
           description: comment.description,
@@ -403,7 +566,7 @@ export class PostService {
           like: comment.likes.length,
           wow: comment.wows.length,
           sad: comment.sads.length,
-          interact: {...interact},
+          interact: { ...interact },
           user: { ...user },
         };
       });

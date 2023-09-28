@@ -36,6 +36,12 @@ export class PostController {
     return this.postService.getPostById(userId, id);
   }
 
+  @Get('share/:id')
+  getPostNoToken(@Param('id', ParseIntPipe) id: number) {
+    return this.postService.getPostNoToken(id);
+  }
+
+
   @UseGuards(MyJwtGuard)
   @Post()
   insertPost(
