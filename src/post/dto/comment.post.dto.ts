@@ -14,6 +14,6 @@ export type CommentDTO = {
   feedback?: number[];
   share?: number;
   userId?: number;
-  updatedAt?: Date;
-  createdAt?: Date;
+  updatedat?: Date;
+  createdat?: Date;
 };

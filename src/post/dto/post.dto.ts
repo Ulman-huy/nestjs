@@ -14,6 +14,6 @@ export type PostDTO = {
   comment: number;
   type: string;
   background: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdat: Date;
+  updatedat: Date;
 };

@@ -24,8 +24,8 @@ model User {
   friends          Int[]
   birthday         DateTime?
   background       String?
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  createdat        DateTime           @default(now())
+  updatedat        DateTime           @updatedAt
   // relationship
   posts            Post[]
   comments         Comment[]
@@ -53,8 +53,8 @@ model Post {
   type        String?   @default("DEFAULT")
   background  String?   @default("")
   // ...
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdat   DateTime  @default(now())
+  updatedat   DateTime  @updatedAt
   // relationship
   userId      Int
   comments    Comment[]
@@ -78,8 +78,8 @@ model Comment {
   share       Int?     @default(0)
   feedback    Int[]    @default([])
   type        String   @default("DEFAULT")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdat   DateTime @default(now())
+  updatedat   DateTime @updatedAt
 
   userId Int
   postId Int
@@ -107,8 +107,8 @@ model Room {
   listAvatar String[]
   listOwner  Int[]
   listName   String[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime
+  createdat  DateTime @default(now())
+  updatedat  DateTime
 
   @@map("room")
 }
@@ -118,8 +118,8 @@ model ChatMessage {
   message   String
   senderId  Int
   reciverId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime
+  createdat DateTime @default(now())
+  updatedat DateTime
 
   user User @relation(fields: [senderId], references: [id])
 
@@ -131,8 +131,8 @@ model AddFriendRequest {
   senderId  Int
   reciverId Int
   status    String   @default("WAITING")
-  createdAt DateTime @default(now())
-  updatedAt DateTime
+  createdat DateTime @default(now())
+  updatedat DateTime
 
   user User @relation(fields: [senderId], references: [id])
 
