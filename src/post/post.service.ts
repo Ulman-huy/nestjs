@@ -21,19 +21,19 @@ export class PostService {
       const postPromises = posts.map(async (post: PostDTO) => {
         const user = await this.prismaService.user.findUnique({
           where: {
-            id: post.userid,
+            id: post.user_id,
           },
           select: {
             email: true,
             image: true,
-            firstname: true,
-            lastname: true,
+            first_name: true,
+            last_name: true,
             slug: true,
           },
         });
         const comment = await this.prismaService.comment.findFirst({
           where: {
-            postid: post.id,
+            post_id: post.id,
             type: 'DEFAULT',
           },
           orderBy: {
@@ -44,13 +44,13 @@ export class PostService {
         if (comment) {
           userComment = await this.prismaService.user.findFirst({
             where: {
-              id: comment.userid,
+              id: comment.user_id,
             },
             select: {
               email: true,
               image: true,
-              firstname: true,
-              lastname: true,
+              first_name: true,
+              last_name: true,
               slug: true,
             },
           });
@@ -70,8 +70,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             user: { ...user },
             commentPreview: {
               id: comment.id,
@@ -84,10 +84,10 @@ export class PostService {
               heart: comment.hearts.length,
               wow: comment.wows.length,
               sad: comment.sads.length,
-              createdAt: comment.createdat,
-              updatedAt: comment.updatedat,
-              userId: comment.userid,
-              postId: comment.postid,
+              created_at: comment.created_at,
+              updated_at: comment.updated_at,
+              user_id: comment.user_id,
+              post_id: comment.post_id,
               type: comment.type,
               user: userComment,
             },
@@ -108,8 +108,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             user: { ...user },
           };
         }
@@ -123,7 +123,7 @@ export class PostService {
     }
   }
 
-  async getPosts(userId: number) {
+  async getPosts(user_id: number) {
     try {
       const posts = await this.prismaService.post.findMany({
         orderBy: {
@@ -135,36 +135,36 @@ export class PostService {
       const postPromises = posts.map(async (post: PostDTO) => {
         const user = await this.prismaService.user.findUnique({
           where: {
-            id: post.userid,
+            id: post.user_id,
           },
           select: {
             email: true,
             image: true,
-            firstname: true,
-            lastname: true,
+            first_name: true,
+            last_name: true,
             slug: true,
           },
         });
         const comment: any = await this.prismaService.comment.findFirst({
           where: {
-            postid: post.id,
+            post_id: post.id,
             type: 'DEFAULT',
           },
         });
 
-        const interact = findInteract(userId, post);
+        const interact = findInteract(user_id, post);
         if (comment) {
-          const interactComment = findInteractComment(userId, comment);
+          const interactComment = findInteractComment(user_id, comment);
 
           const userComment = await this.prismaService.user.findFirst({
             where: {
-              id: comment.userId,
+              id: comment.user_id,
             },
             select: {
               email: true,
               image: true,
-              firstname: true,
-              lastname: true,
+              first_name: true,
+              last_name: true,
               slug: true,
             },
           });
@@ -184,8 +184,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: interact,
             user: { ...user },
             commentPreview: {
@@ -199,12 +199,12 @@ export class PostService {
               heart: comment.hearts.length,
               wow: comment.wows.length,
               sad: comment.sads.length,
-              createdAt: comment.createdat,
-              updatedAt: comment.updatedat,
+              created_at: comment.created_at,
+              updated_at: comment.updated_at,
               interact: { ...interactComment },
-              userId: comment.userId,
+              user_id: comment.user_id,
               type: comment.type,
-              postId: comment.postId,
+              post_id: comment.post_id,
               user: userComment,
             },
           };
@@ -224,8 +224,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: interact,
             user: { ...user },
           };
@@ -240,43 +240,43 @@ export class PostService {
     }
   }
 
-  async getPostById(userId: number, postId: number) {
+  async getPostById(user_id: number, post_id: number) {
     try {
       const post = await this.prismaService.post.findFirst({
         where: {
-          id: postId,
+          id: post_id,
         },
       });
       const comment: any = await this.prismaService.comment.findFirst({
         where: {
-          postid: post.id,
+          post_id: post.id,
           type: 'DEFAULT',
         },
       });
       if (post) {
-        const interact = findInteract(userId, post);
+        const interact = findInteract(user_id, post);
         const user = await this.prismaService.user.findUnique({
           where: {
-            id: post.userid,
+            id: post.user_id,
           },
           select: {
             slug: true,
-            fullname: true,
+            full_name: true,
             email: true,
             image: true,
           },
         });
         if (comment) {
-          const interactComment = findInteractComment(userId, comment);
+          const interactComment = findInteractComment(user_id, comment);
           const userComment = await this.prismaService.user.findFirst({
             where: {
-              id: comment.userId,
+              id: comment.user_id,
             },
             select: {
               email: true,
               image: true,
-              firstname: true,
-              lastname: true,
+              first_name: true,
+              last_name: true,
               slug: true,
             },
           });
@@ -295,8 +295,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: interact,
             user: { ...user },
             commentPreview: {
@@ -310,12 +310,12 @@ export class PostService {
               heart: comment.hearts.length,
               wow: comment.wows.length,
               sad: comment.sads.length,
-              createdAt: comment.createdat,
-              updatedAt: comment.updatedat,
+              created_at: comment.created_at,
+              updated_at: comment.updated_at,
               interact: { ...interactComment },
-              userId: comment.userId,
+              user_id: comment.user_id,
               type: comment.type,
-              postId: comment.postId,
+              post_id: comment.post_id,
               user: userComment,
             },
           };
@@ -335,8 +335,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: interact,
             user: { ...user },
           };
@@ -347,27 +347,27 @@ export class PostService {
     }
   }
 
-  async getPostNoToken(postId: number) {
+  async getPostNoToken(post_id: number) {
     try {
       const post = await this.prismaService.post.findFirst({
         where: {
-          id: postId,
+          id: post_id,
         },
       });
       const comment: any = await this.prismaService.comment.findFirst({
         where: {
-          postid: post.id,
+          post_id: post.id,
           type: 'DEFAULT',
         },
       });
       if (post) {
         const user = await this.prismaService.user.findUnique({
           where: {
-            id: post.userid,
+            id: post.user_id,
           },
           select: {
             slug: true,
-            fullname: true,
+            full_name: true,
             email: true,
             image: true,
           },
@@ -375,13 +375,13 @@ export class PostService {
         if (comment) {
           const userComment = await this.prismaService.user.findFirst({
             where: {
-              id: comment.userId,
+              id: comment.user_id,
             },
             select: {
               email: true,
               image: true,
-              firstname: true,
-              lastname: true,
+              first_name: true,
+              last_name: true,
               slug: true,
             },
           });
@@ -400,8 +400,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: null,
             user: { ...user },
             commentPreview: {
@@ -415,12 +415,12 @@ export class PostService {
               heart: comment.hearts.length,
               wow: comment.wows.length,
               sad: comment.sads.length,
-              createdAt: comment.createdat,
-              updatedAt: comment.updatedat,
+              created_at: comment.created_at,
+              updated_at: comment.updated_at,
               interact: null,
-              userId: comment.userId,
+              user_id: comment.user_id,
               type: comment.type,
-              postId: comment.postId,
+              post_id: comment.post_id,
               user: userComment,
             },
           };
@@ -440,8 +440,8 @@ export class PostService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: null,
             user: { ...user },
           };
@@ -452,12 +452,12 @@ export class PostService {
     }
   }
 
-  async insertPost(userId: number, insertPostDTO: InsetPostDTO) {
+  async insertPost(user_id: number, insertPostDTO: InsetPostDTO) {
     try {
       const post = await this.prismaService.post.create({
         data: {
           ...insertPostDTO,
-          userid: userId,
+          user_id: user_id,
         },
       });
       return {
@@ -469,10 +469,10 @@ export class PostService {
     }
   }
 
-  async updatePost(userId: number, updatePostDTO: UpdatePostDTO) {
+  async updatePost(user_id: number, updatePostDTO: UpdatePostDTO) {
     const newPost = await this.prismaService.post.update({
       where: {
-        id: updatePostDTO.postid,
+        id: updatePostDTO.post_id,
       },
       data: {
         // ...updatePostDTO,
@@ -481,36 +481,36 @@ export class PostService {
     return newPost;
   }
 
-  async deletePost(postId: number) {
+  async deletePost(post_id: number) {
     await this.prismaService.post.delete({
       where: {
-        id: postId,
+        id: post_id,
       },
     });
   }
 
-  async hidePost(userId: number, updatePostDTO: UpdatePostDTO) {
+  async hidePost(user_id: number, updatePostDTO: UpdatePostDTO) {
     const post = await this.prismaService.post.findFirst({
       where: {
-        id: updatePostDTO.postid,
+        id: updatePostDTO.post_id,
       },
     });
 
     return post;
   }
 
-  async commentPost(userId: number, commentData: CommentDTO) {
+  async commentPost(user_id: number, commentData: CommentDTO) {
     try {
-      const { postid } = commentData;
+      const { post_id } = commentData;
       const comment = await this.prismaService.comment.create({
         data: {
-          userid: userId,
+          user_id: user_id,
           ...commentData,
         },
       });
       await this.prismaService.post.update({
         where: {
-          id: postid,
+          id: post_id,
         },
         data: {
           comment: {
@@ -524,11 +524,11 @@ export class PostService {
     }
   }
 
-  async getAllCommentWithPostId(userId: number, postId: any) {
+  async getAllCommentWithpost_id(user_id: number, post_id: any) {
     try {
       const comments = await this.prismaService.comment.findMany({
         where: {
-          postid: postId,
+          post_id: post_id,
           type: 'DEFAULT',
         },
         take: 30,
@@ -537,26 +537,26 @@ export class PostService {
       const commentsPromises = comments.map(async (comment: CommentDTO) => {
         const user = await this.prismaService.user.findUnique({
           where: {
-            id: comment.userid,
+            id: comment.user_id,
           },
           select: {
             email: true,
             image: true,
-            firstname: true,
-            lastname: true,
+            first_name: true,
+            last_name: true,
             slug: true,
           },
         });
-        const interact = findInteractComment(userId, comment);
+        const interact = findInteractComment(user_id, comment);
         return {
           id: comment.id,
           description: comment.description,
           image: comment.image,
           share: comment.share,
-          createdAt: comment.createdat,
-          updatedAt: comment.updatedat,
-          postId: comment.postid,
-          userId: comment.userid,
+          created_at: comment.created_at,
+          updated_at: comment.updated_at,
+          post_id: comment.post_id,
+          user_id: comment.user_id,
           feedback: comment.feedback,
           angry: comment.angrys.length,
           dear: comment.dears.length,
@@ -576,11 +576,11 @@ export class PostService {
     } catch (error) {}
   }
 
-  async addStatusPost(userId: number, body: { postId: number; type: string }) {
+  async addStatusPost(user_id: number, body: { post_id: number; type: string }) {
     try {
       const post = await this.prismaService.post.findFirst({
         where: {
-          id: body.postId,
+          id: body.post_id,
         },
       });
 
@@ -595,16 +595,16 @@ export class PostService {
       ];
       for (const key of interactKeys) {
         if (!post[key].length) continue;
-        const isValid = post[key].includes(userId);
+        const isValid = post[key].includes(user_id);
         if (isValid) {
-          post[key] = post[key].filter((item: number) => item != userId);
+          post[key] = post[key].filter((item: number) => item != user_id);
         }
       }
-      post[body.type].push(userId);
+      post[body.type].push(user_id);
 
       await this.prismaService.post.update({
         where: {
-          id: body.postId,
+          id: body.post_id,
         },
         data: {
           ...post,
@@ -626,9 +626,9 @@ export class PostService {
           comment: post.comment,
           type: post.type,
           background: post.background,
-          createdAt: post.createdat,
-          updatedAt: post.updatedat,
-          userId: post.userid,
+          created_at: post.created_at,
+          updated_at: post.updated_at,
+          user_id: post.user_id,
           interact: { isInteract: true, action: body.type },
         },
       };
@@ -638,7 +638,7 @@ export class PostService {
   }
 
   async addStatusComment(
-    userId: number,
+    user_id: number,
     body: { commentId: number; type: string },
   ) {
     try {
@@ -659,12 +659,12 @@ export class PostService {
       ];
       for (const key of interactKeys) {
         if (!comment[key].length) continue;
-        const isValid = comment[key].includes(userId);
+        const isValid = comment[key].includes(user_id);
         if (isValid) {
-          comment[key] = comment[key].filter((item: number) => item != userId);
+          comment[key] = comment[key].filter((item: number) => item != user_id);
         }
       }
-      comment[body.type].push(userId);
+      comment[body.type].push(user_id);
 
       await this.prismaService.comment.update({
         where: {
@@ -687,9 +687,9 @@ export class PostService {
           wow: comment.wows.length,
           sad: comment.sads.length,
           share: comment.share,
-          createdAt: comment.createdat,
-          updatedAt: comment.updatedat,
-          userId: comment.userid,
+          created_at: comment.created_at,
+          updated_at: comment.updated_at,
+          user_id: comment.user_id,
           interact: { isInteract: true, action: body.type },
         },
       };
@@ -715,19 +715,19 @@ export class PostService {
       const commentPromises = comments.map(async (comment: CommentDTO) => {
         const user = await this.prismaService.user.findUnique({
           where: {
-            id: comment.userid,
+            id: comment.user_id,
           },
           select: {
             email: true,
             image: true,
-            firstname: true,
-            lastname: true,
+            first_name: true,
+            last_name: true,
             slug: true,
           },
         });
         return {
           id: comment.id,
-          postId: comment.postid,
+          post_id: comment.post_id,
           description: comment.description,
           image: comment.image,
           like: comment.likes.length,
@@ -740,9 +740,9 @@ export class PostService {
           type: comment.type,
           feedback: comment.feedback.length,
           share: comment.share,
-          userId: comment.userid,
-          updatedAt: comment.updatedat,
-          createdAt: comment.createdat,
+          user_id: comment.user_id,
+          updated_at: comment.updated_at,
+          created_at: comment.created_at,
           user,
         };
       });
@@ -754,7 +754,7 @@ export class PostService {
   }
 
   async feedbackComment(
-    userId: number,
+    user_id: number,
     commentId: number,
     commentData: CommentDTO,
   ) {
@@ -772,7 +772,7 @@ export class PostService {
 
     const feedbackComment = await this.prismaService.comment.create({
       data: {
-        userid: userId,
+        user_id: user_id,
         ...commentData,
         type: 'FEEDBACK',
       },

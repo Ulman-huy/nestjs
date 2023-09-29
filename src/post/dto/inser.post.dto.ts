@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class InsetPostDTO {
-  userId: number;
+  user_id: number;
   description?: string;
   images?: string;
   likes?: number[];

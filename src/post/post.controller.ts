@@ -21,8 +21,8 @@ export class PostController {
 
   @UseGuards(MyJwtGuard)
   @Get()
-  getPost(@GetUser('id', ParseIntPipe) userId: number) {
-    return this.postService.getPosts(userId);
+  getPost(@GetUser('id', ParseIntPipe) user_id: number) {
+    return this.postService.getPosts(user_id);
   }
 
   @Get('all')
@@ -32,8 +32,8 @@ export class PostController {
 
   @UseGuards(MyJwtGuard)
   @Get(':id')
-  getPostById(@GetUser('id', ParseIntPipe) userId: number, @Param('id', ParseIntPipe) id: number) {
-    return this.postService.getPostById(userId, id);
+  getPostById(@GetUser('id', ParseIntPipe) user_id: number, @Param('id', ParseIntPipe) id: number) {
+    return this.postService.getPostById(user_id, id);
   }
 
   @Get('share/:id')
@@ -45,67 +45,67 @@ export class PostController {
   @UseGuards(MyJwtGuard)
   @Post()
   insertPost(
-    @GetUser('id', ParseIntPipe) userId: number,
+    @GetUser('id', ParseIntPipe) user_id: number,
     @Body() insertPostDTO: InsetPostDTO,
   ) {
-    return this.postService.insertPost(userId, insertPostDTO);
+    return this.postService.insertPost(user_id, insertPostDTO);
   }
 
   @UseGuards(MyJwtGuard)
   @Patch()
   updatePost(
-    @GetUser('id', ParseIntPipe) userId: number,
+    @GetUser('id', ParseIntPipe) user_id: number,
     @Body() updatePostDTO: UpdatePostDTO,
   ) {
-    return this.postService.updatePost(userId, updatePostDTO);
+    return this.postService.updatePost(user_id, updatePostDTO);
   }
 
   @UseGuards(MyJwtGuard)
   @Patch('hide')
   hidePost(
-    @GetUser('id', ParseIntPipe) userId: number,
+    @GetUser('id', ParseIntPipe) user_id: number,
     @Body() updatePostDTO: UpdatePostDTO,
   ) {
-    console.log({ updatePostDTO, userId });
+    console.log({ updatePostDTO, user_id });
   }
 
   @UseGuards(MyJwtGuard)
   @Delete()
-  deletePost(@Param('id', ParseIntPipe) postId: number) {
-    return this.postService.deletePost(postId);
+  deletePost(@Param('id', ParseIntPipe) post_id: number) {
+    return this.postService.deletePost(post_id);
   }
 
   @UseGuards(MyJwtGuard)
   @Post('comments')
   commentPost(
-    @GetUser('id', ParseIntPipe) userId: number,
+    @GetUser('id', ParseIntPipe) user_id: number,
     @Body() commentData: CommentDTO,
   ) {
-    return this.postService.commentPost(userId, commentData);
+    return this.postService.commentPost(user_id, commentData);
   }
 
   @UseGuards(MyJwtGuard)
-  @Get('comments/:postId')
-  getCommentsWithId(@GetUser('id', ParseIntPipe) userId: number,@Param('postId', ParseIntPipe) postId: number) {
-    return this.postService.getAllCommentWithPostId(userId, postId);
+  @Get('comments/:post_id')
+  getCommentsWithId(@GetUser('id', ParseIntPipe) user_id: number,@Param('post_id', ParseIntPipe) post_id: number) {
+    return this.postService.getAllCommentWithpost_id(user_id, post_id);
   }
 
   @UseGuards(MyJwtGuard)
   @Post('status')
   addStatusPost(
-    @GetUser('id', ParseIntPipe) userId: number,
-    @Body() body: { type: string; postId: number },
+    @GetUser('id', ParseIntPipe) user_id: number,
+    @Body() body: { type: string; post_id: number },
   ) {
-    return this.postService.addStatusPost(userId, body);
+    return this.postService.addStatusPost(user_id, body);
   }
 
   @UseGuards(MyJwtGuard)
   @Post('comments/status')
   addStatusComments(
-    @GetUser('id', ParseIntPipe) userId: number,
+    @GetUser('id', ParseIntPipe) user_id: number,
     @Body() body: { type: string; commentId: number },
   ) {
-    return this.postService.addStatusComment(userId, body);
+    return this.postService.addStatusComment(user_id, body);
   }
 
   @UseGuards(MyJwtGuard)
@@ -117,9 +117,9 @@ export class PostController {
   @UseGuards(MyJwtGuard)
   @Post('comments/feedback')
   feedbackComment(
-    @GetUser('id', ParseIntPipe) userId: number,
+    @GetUser('id', ParseIntPipe) user_id: number,
     @Body() { commentId, ...commentData }: any,
   ) {
-    return this.postService.feedbackComment(userId, commentId, commentData);
+    return this.postService.feedbackComment(user_id, commentId, commentData);
   }
 }

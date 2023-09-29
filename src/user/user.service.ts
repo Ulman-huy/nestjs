@@ -12,17 +12,17 @@ export class UserService {
       id: user.id,
       email: user.email,
       slug: user.slug,
-      firstName: user.firstname,
-      lastName: user.lastname,
-      fullName: user.fullname,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      full_name: user.full_name,
       image: user.image,
       bio: user.bio,
       location: user.location,
       friend: user.friends.length,
       birthday: user.birthday,
       background: user.background,
-      createdAt: user.createdat,
-      updatedAt: user.updatedat,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
     };
   }
 
@@ -37,7 +37,7 @@ export class UserService {
         take: 36,
         select: {
           image: true,
-          fullname: true,
+          full_name: true,
           slug: true,
           id: true,
           email: true,
@@ -61,22 +61,22 @@ export class UserService {
           id: true,
           email: true,
           image: true,
-          firstname: true,
-          lastname: true,
+          first_name: true,
+          last_name: true,
           slug: true,
         },
       });
       if (!user) return false;
       const posts = await this.prismaService.post.findMany({
         where: {
-          userid: user.id,
+          user_id: user.id,
         },
       });
 
       const postPromises = posts.map(async (post: PostDTO) => {
         const comment: any = await this.prismaService.comment.findFirst({
           where: {
-            postid: post.id,
+            post_id: post.id,
             type: 'DEFAULT',
           },
         });
@@ -87,13 +87,13 @@ export class UserService {
 
           const userComment = await this.prismaService.user.findFirst({
             where: {
-              id: comment.userid,
+              id: comment.user_id,
             },
             select: {
               email: true,
               image: true,
-              firstname: true,
-              lastname: true,
+              first_name: true,
+              last_name: true,
               slug: true,
             },
           });
@@ -113,8 +113,8 @@ export class UserService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: interact,
             user: { ...user },
             commentPreview: {
@@ -128,12 +128,12 @@ export class UserService {
               heart: comment.hearts.length,
               wow: comment.wows.length,
               sad: comment.sads.length,
-              createdAt: comment.createdat,
-              updatedAt: comment.updatedat,
+              created_at: comment.created_at,
+              updated_at: comment.updated_at,
               interact: { ...interactComment },
-              userId: comment.userid,
+              user_id: comment.user_id,
               type: comment.type,
-              postId: comment.postid,
+              post_id: comment.post_id,
               user: userComment,
             },
           };
@@ -153,8 +153,8 @@ export class UserService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdat,
-            updatedAt: post.updatedat,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
             interact: interact,
             user: { ...user },
           };
@@ -179,15 +179,15 @@ export class UserService {
         id: user.id,
         email: user.email,
         slug: user.slug,
-        fullName: user.fullname,
+        full_name: user.full_name,
         image: user.image,
         bio: user.bio,
         location: user.location,
         friend: user.friends.length,
         birthday: user.birthday,
         background: user.background,
-        createdAt: user.createdat,
-        updatedAt: user.updatedat,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
       };
     } catch (error) {
       return error;
@@ -254,7 +254,7 @@ export class UserService {
         },
         select: {
           image: true,
-          fullname: true,
+          full_name: true,
           slug: true,
           id: true,
           email: true,

@@ -27,12 +27,12 @@ export class AuthService {
       throw new ForbiddenException('Email đã tồn tại!');
     }
     const salt = genSaltSync(10);
-    const hashedpassword = hashSync(authDTO.password, salt);
+    const hashed_password = hashSync(authDTO.password, salt);
 
     const user = await this.prismaService.user.create({
       data: {
         email: authDTO.email,
-        hashedpassword,
+        hashed_password,
       },
       select: {
         id: true,
@@ -53,13 +53,13 @@ export class AuthService {
     if (!user) {
       throw new ForbiddenException('Tài khoản email không tồn tại!');
     }
-    const passwordMatched = compareSync(authDTO.password, user.hashedpassword);
+    const passwordMatched = compareSync(authDTO.password, user.hashed_password);
 
     if (!passwordMatched) {
       throw new ForbiddenException('Tài khoản hoặc mật khẩu không chính xác!');
     }
     const token = await this.signJwtToken(user.id, user.email);
-    delete user.hashedpassword;
+    delete user.hashed_password;
     return token;
   }
 
@@ -89,14 +89,14 @@ export class AuthService {
   }
 
   async signJwtToken(
-    userId: number,
+    user_id: number,
     email: string,
   ): Promise<{
     accessToken: string;
     refreshToken: string;
   }> {
     const payload = {
-      sub: userId,
+      sub: user_id,
       email: email,
     };
 

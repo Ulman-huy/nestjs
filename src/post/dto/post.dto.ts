@@ -1,6 +1,6 @@
 export type PostDTO = {
   id: number;
-  userid: number;
+  user_id: number;
   description: string;
   images: string;
   likes: number[];
@@ -14,6 +14,6 @@ export type PostDTO = {
   comment: number;
   type: string;
   background: string;
-  createdat: Date;
-  updatedat: Date;
+  created_at: Date;
+  updated_at: Date;
 };

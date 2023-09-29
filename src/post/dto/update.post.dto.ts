@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class UpdatePostDTO {
   @IsNotEmpty()
-  postid: number;
+  post_id: number;
   description?: string;
   images?: string;
   like?: number;

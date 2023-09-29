@@ -1,7 +1,7 @@
 import { CommentDTO } from "src/post/dto";
 import { PostDTO } from "src/post/dto/post.dto";
 
-function findInteract(userId: number, data: PostDTO) {
+function findInteract(user_id: number, data: PostDTO) {
   let isInteract = false;
   let action = '';
   const interactKeys = [
@@ -14,7 +14,7 @@ function findInteract(userId: number, data: PostDTO) {
     'sads',
   ];
   for (const key of interactKeys) {
-    if (data[key] && data[key].includes(userId)) {
+    if (data[key] && data[key].includes(user_id)) {
       isInteract = true;
       action = key;
       break;
@@ -25,7 +25,7 @@ function findInteract(userId: number, data: PostDTO) {
     action,
   };
 }
-function findInteractComment(userId: number, data: CommentDTO) {
+function findInteractComment(user_id: number, data: CommentDTO) {
   let isInteract = false;
   let action = '';
   const interactKeys = [
@@ -38,7 +38,7 @@ function findInteractComment(userId: number, data: CommentDTO) {
     'hearts',
   ];
   for (const key of interactKeys) {
-    if (data[key] && data[key].includes(userId)) {
+    if (data[key] && data[key].includes(user_id)) {
       isInteract = true;
       action = key;
       break;

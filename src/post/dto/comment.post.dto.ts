@@ -1,6 +1,6 @@
 export type CommentDTO = {
   id: number;
-  postid: number;
+  post_id: number;
   description: string;
   image?: string;
   likes?: number[];
@@ -13,7 +13,7 @@ export type CommentDTO = {
   type?: string;
   feedback?: number[];
   share?: number;
-  userid?: number;
-  updatedat?: Date;
-  createdat?: Date;
+  user_id?: number;
+  updated_at?: Date;
+  created_at?: Date;
 };

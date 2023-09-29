@@ -14,18 +14,18 @@ model User {
   id               Int                @id @default(autoincrement())
   email            String             @unique
   slug             String?            @default(uuid())
-  hashedpassword   String
-  firstname        String?
-  lastname         String?
-  fullname         String?
+  hashed_password   String
+  first_name        String?
+  last_name         String?
+  full_name         String?
   image            String?
   bio              String?
   location         String?
   friends          Int[]
   birthday         DateTime?
   background       String?
-  createdat        DateTime           @default(now())
-  updatedat        DateTime           @updatedAt
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
   // relationship
   posts            Post[]
   comments         Comment[]
@@ -53,12 +53,12 @@ model Post {
   type        String?   @default("DEFAULT")
   background  String?   @default("")
   // ...
-  createdat   DateTime  @default(now())
-  updatedat   DateTime  @updatedAt
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
   // relationship
-  userid      Int
+  user_id      Int
   comments    Comment[]
-  User        User      @relation(fields: [userid], references: [id])
+  User        User      @relation(fields: [user_id], references: [id])
   Image       Image[]
 
   @@map("post")
@@ -78,13 +78,13 @@ model Comment {
   share       Int?     @default(0)
   feedback    Int[]    @default([])
   type        String   @default("DEFAULT")
-  createdat   DateTime @default(now())
-  updatedat   DateTime @updatedAt
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 
-  userid Int
-  postid Int
-  post   Post @relation(fields: [postid], references: [id])
-  user   User @relation(fields: [userid], references: [id])
+  user_id Int
+  post_id Int
+  post   Post @relation(fields: [user_id], references: [id])
+  user   User @relation(fields: [post_id], references: [id])
 
   @@map("comment")
 }
@@ -92,11 +92,10 @@ model Comment {
 model Image {
   id     Int    @id @default(autoincrement())
   url    String
-  postid Int?
-
-  userid Int
-  user   User  @relation(fields: [userid], references: [id])
-  Post   Post? @relation(fields: [postid], references: [id])
+  post_id Int?
+  user_id Int
+  user   User  @relation(fields: [user_id], references: [id])
+  Post   Post? @relation(fields: [post_id], references: [id])
 
   @@map("image")
 }
@@ -104,11 +103,11 @@ model Image {
 model Room {
   id         Int      @id @default(autoincrement())
   status     String   @default("ACTIVE")
-  listAvatar String[]
-  listOwner  Int[]
-  listName   String[]
-  createdat  DateTime @default(now())
-  updatedat  DateTime
+  list_avatar String[]
+  list_owner  Int[]
+  list_name   String[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime
 
   @@map("room")
 }
@@ -116,25 +115,25 @@ model Room {
 model ChatMessage {
   id        Int      @id @default(autoincrement())
   message   String
-  senderId  Int
-  reciverId Int
-  createdat DateTime @default(now())
-  updatedat DateTime
+  sender_id  Int
+  reciver_id Int
+  created_at DateTime @default(now())
+  updated_at DateTime
 
-  user User @relation(fields: [senderId], references: [id])
+  user User @relation(fields: [sender_id], references: [id])
 
   @@map("chatMessage")
 }
 
 model AddFriendRequest {
   id        Int      @id @default(autoincrement())
-  senderId  Int
-  reciverId Int
+  sender_id  Int
+  reciver_id Int
   status    String   @default("WAITING")
-  createdat DateTime @default(now())
-  updatedat DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime
 
-  user User @relation(fields: [senderId], references: [id])
+  user User @relation(fields: [sender_id], references: [id])
 
   @@map("addFriendRequest")
 }
