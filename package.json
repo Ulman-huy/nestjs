@@ -10,7 +10,7 @@
     "db:dev:remove": "docker compose rm dev-database --stop --force --volumes",
     "db:dev:create": "docker compose up dev-database --detach",
     "db:dev:restart": "npm run db:dev:remove && npm run db:dev:create && npm run db:dev:deploy",
-    "build": "CI=false prisma migrate:deploy && nest build",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
