@@ -12,9 +12,9 @@ export class UserService {
       id: user.id,
       email: user.email,
       slug: user.slug,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      fullName: user.fullName,
+      firstName: user.firstname,
+      lastName: user.lastname,
+      fullName: user.fullname,
       image: user.image,
       bio: user.bio,
       location: user.location,
@@ -37,7 +37,7 @@ export class UserService {
         take: 36,
         select: {
           image: true,
-          fullName: true,
+          fullname: true,
           slug: true,
           id: true,
           email: true,
@@ -61,22 +61,22 @@ export class UserService {
           id: true,
           email: true,
           image: true,
-          firstName: true,
-          lastName: true,
+          firstname: true,
+          lastname: true,
           slug: true,
         },
       });
       if (!user) return false;
       const posts = await this.prismaService.post.findMany({
         where: {
-          userId: user.id,
+          userid: user.id,
         },
       });
 
       const postPromises = posts.map(async (post: PostDTO) => {
         const comment: any = await this.prismaService.comment.findFirst({
           where: {
-            postId: post.id,
+            postid: post.id,
             type: 'DEFAULT',
           },
         });
@@ -87,13 +87,13 @@ export class UserService {
 
           const userComment = await this.prismaService.user.findFirst({
             where: {
-              id: comment.userId,
+              id: comment.userid,
             },
             select: {
               email: true,
               image: true,
-              firstName: true,
-              lastName: true,
+              firstname: true,
+              lastname: true,
               slug: true,
             },
           });
@@ -131,9 +131,9 @@ export class UserService {
               createdAt: comment.createdat,
               updatedAt: comment.updatedat,
               interact: { ...interactComment },
-              userId: comment.userId,
+              userId: comment.userid,
               type: comment.type,
-              postId: comment.postId,
+              postId: comment.postid,
               user: userComment,
             },
           };
@@ -179,7 +179,7 @@ export class UserService {
         id: user.id,
         email: user.email,
         slug: user.slug,
-        fullName: user.fullName,
+        fullName: user.fullname,
         image: user.image,
         bio: user.bio,
         location: user.location,
@@ -254,7 +254,7 @@ export class UserService {
         },
         select: {
           image: true,
-          fullName: true,
+          fullname: true,
           slug: true,
           id: true,
           email: true,

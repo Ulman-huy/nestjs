@@ -14,10 +14,10 @@ model User {
   id               Int                @id @default(autoincrement())
   email            String             @unique
   slug             String?            @default(uuid())
-  hashedPassword   String
-  firstName        String?
-  lastName         String?
-  fullName         String?
+  hashedpassword   String
+  firstname        String?
+  lastname         String?
+  fullname         String?
   image            String?
   bio              String?
   location         String?
@@ -56,9 +56,9 @@ model Post {
   createdat   DateTime  @default(now())
   updatedat   DateTime  @updatedAt
   // relationship
-  userId      Int
+  userid      Int
   comments    Comment[]
-  User        User      @relation(fields: [userId], references: [id])
+  User        User      @relation(fields: [userid], references: [id])
   Image       Image[]
 
   @@map("post")
@@ -81,10 +81,10 @@ model Comment {
   createdat   DateTime @default(now())
   updatedat   DateTime @updatedAt
 
-  userId Int
-  postId Int
-  post   Post @relation(fields: [postId], references: [id])
-  user   User @relation(fields: [userId], references: [id])
+  userid Int
+  postid Int
+  post   Post @relation(fields: [postid], references: [id])
+  user   User @relation(fields: [userid], references: [id])
 
   @@map("comment")
 }
@@ -92,11 +92,11 @@ model Comment {
 model Image {
   id     Int    @id @default(autoincrement())
   url    String
-  postId Int?
+  postid Int?
 
-  userId Int
-  user   User  @relation(fields: [userId], references: [id])
-  Post   Post? @relation(fields: [postId], references: [id])
+  userid Int
+  user   User  @relation(fields: [userid], references: [id])
+  Post   Post? @relation(fields: [postid], references: [id])
 
   @@map("image")
 }

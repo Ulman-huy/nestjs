@@ -1,6 +1,6 @@
 export type PostDTO = {
   id: number;
-  userId: number;
+  userid: number;
   description: string;
   images: string;
   likes: number[];

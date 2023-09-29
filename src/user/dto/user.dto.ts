@@ -2,9 +2,9 @@ export type UserDTO = {
   id: number;
   email: string;
   slug: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
+  firstname: string;
+  lastname: string;
+  fullname: string;
   image: string;
   bio: string;
   location: string;
