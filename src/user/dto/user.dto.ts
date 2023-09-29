@@ -10,7 +10,7 @@ export type UserDTO = {
   location: string;
   friends: number[];
   birthday: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createdat: Date;
+  updatedat: Date;
   background: string;
 };

@@ -21,8 +21,8 @@ export class UserService {
       friend: user.friends.length,
       birthday: user.birthday,
       background: user.background,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      createdAt: user.createdat,
+      updatedAt: user.updatedat,
     };
   }
 
@@ -113,8 +113,8 @@ export class UserService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdAt,
-            updatedAt: post.updatedAt,
+            createdAt: post.createdat,
+            updatedAt: post.updatedat,
             interact: interact,
             user: { ...user },
             commentPreview: {
@@ -128,8 +128,8 @@ export class UserService {
               heart: comment.hearts.length,
               wow: comment.wows.length,
               sad: comment.sads.length,
-              createdAt: comment.createdAt,
-              updatedAt: comment.updatedAt,
+              createdAt: comment.createdat,
+              updatedAt: comment.updatedat,
               interact: { ...interactComment },
               userId: comment.userId,
               type: comment.type,
@@ -153,8 +153,8 @@ export class UserService {
             comment: post.comment,
             type: post.type,
             background: post.background,
-            createdAt: post.createdAt,
-            updatedAt: post.updatedAt,
+            createdAt: post.createdat,
+            updatedAt: post.updatedat,
             interact: interact,
             user: { ...user },
           };
@@ -186,8 +186,8 @@ export class UserService {
         friend: user.friends.length,
         birthday: user.birthday,
         background: user.background,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+        createdAt: user.createdat,
+        updatedAt: user.updatedat,
       };
     } catch (error) {
       return error;
