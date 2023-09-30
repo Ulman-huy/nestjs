@@ -61,8 +61,12 @@ export class PostService {
             like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
             haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
             dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0] ? post.angrys?.split(',').length : 0,
-            heart: post.hearts?.split(',')[0] ? post.hearts?.split(',').length : 0,
+            angry: post.angrys?.split(',')[0]
+              ? post.angrys?.split(',').length
+              : 0,
+            heart: post.hearts?.split(',')[0]
+              ? post.hearts?.split(',').length
+              : 0,
             wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
             sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
             share: post.share,
@@ -76,13 +80,27 @@ export class PostService {
               id: comment.id,
               description: comment.description,
               images: comment.image,
-              like: comment.likes?.split(',')[0] ? comment.likes?.split(',').length : 0,
-              haha: comment.hahas?.split(',')[0] ? comment.hahas?.split(',').length : 0,
-              dear: comment.dears?.split(',')[0] ? comment.dears?.split(',').length : 0,
-              angry: comment.angrys?.split(',')[0] ? comment.angrys?.split(',').length : 0,
-              heart: comment.hearts?.split(',')[0] ? comment.hearts?.split(',').length : 0,
-              wow: comment.wows?.split(',')[0] ? comment.wows?.split(',').length : 0,
-              sad: comment.sads?.split(',')[0] ? comment.sads?.split(',').length : 0,
+              like: comment.likes?.split(',')[0]
+                ? comment.likes?.split(',').length
+                : 0,
+              haha: comment.hahas?.split(',')[0]
+                ? comment.hahas?.split(',').length
+                : 0,
+              dear: comment.dears?.split(',')[0]
+                ? comment.dears?.split(',').length
+                : 0,
+              angry: comment.angrys?.split(',')[0]
+                ? comment.angrys?.split(',').length
+                : 0,
+              heart: comment.hearts?.split(',')[0]
+                ? comment.hearts?.split(',').length
+                : 0,
+              wow: comment.wows?.split(',')[0]
+                ? comment.wows?.split(',').length
+                : 0,
+              sad: comment.sads?.split(',')[0]
+                ? comment.sads?.split(',').length
+                : 0,
               created_at: comment.created_at,
               updated_at: comment.updated_at,
               user_id: comment.user_id,
@@ -99,8 +117,12 @@ export class PostService {
             like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
             haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
             dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0] ? post.angrys?.split(',').length : 0,
-            heart: post.hearts?.split(',')[0] ? post.hearts?.split(',').length : 0,
+            angry: post.angrys?.split(',')[0]
+              ? post.angrys?.split(',').length
+              : 0,
+            heart: post.hearts?.split(',')[0]
+              ? post.hearts?.split(',').length
+              : 0,
             wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
             sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
             share: post.share,
@@ -175,10 +197,14 @@ export class PostService {
             like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
             haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
             dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0] ? post.angrys?.split(',').length : 0,
+            angry: post.angrys?.split(',')[0]
+              ? post.angrys?.split(',').length
+              : 0,
             wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
             sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
-            heart: post.hearts?.split(',')[0] ? post.hearts?.split(',').length : 0,
+            heart: post.hearts?.split(',')[0]
+              ? post.hearts?.split(',').length
+              : 0,
             share: post.share,
             comment: post.comment,
             type: post.type,
@@ -191,13 +217,27 @@ export class PostService {
               id: comment.id,
               description: comment.description,
               images: comment.image,
-              like: comment.likes?.split(',')[0] ? comment.likes?.split(',').length : 0,
-              haha: comment.hahas?.split(',')[0] ? comment.hahas?.split(',').length : 0,
-              dear: comment.dears?.split(',')[0] ? comment.dears?.split(',').length : 0,
-              angry: comment.angrys?.split(',')[0] ? comment.angrys?.split(',').length : 0,
-              heart: comment.hearts?.split(',')[0] ? comment.hearts?.split(',').length : 0,
-              wow: comment.wows?.split(',')[0] ? comment.wows?.split(',').length : 0,
-              sad: comment.sads?.split(',')[0] ? comment.sads?.split(',').length : 0,
+              like: comment.likes?.split(',')[0]
+                ? comment.likes?.split(',').length
+                : 0,
+              haha: comment.hahas?.split(',')[0]
+                ? comment.hahas?.split(',').length
+                : 0,
+              dear: comment.dears?.split(',')[0]
+                ? comment.dears?.split(',').length
+                : 0,
+              angry: comment.angrys?.split(',')[0]
+                ? comment.angrys?.split(',').length
+                : 0,
+              heart: comment.hearts?.split(',')[0]
+                ? comment.hearts?.split(',').length
+                : 0,
+              wow: comment.wows?.split(',')[0]
+                ? comment.wows?.split(',').length
+                : 0,
+              sad: comment.sads?.split(',')[0]
+                ? comment.sads?.split(',').length
+                : 0,
               created_at: comment.created_at,
               updated_at: comment.updated_at,
               interact: { ...interactComment },
@@ -215,8 +255,12 @@ export class PostService {
             like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
             haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
             dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0] ? post.angrys?.split(',').length : 0,
-            heart: post.hearts?.split(',')[0] ? post.hearts?.split(',').length : 0,
+            angry: post.angrys?.split(',')[0]
+              ? post.angrys?.split(',').length
+              : 0,
+            heart: post.hearts?.split(',')[0]
+              ? post.hearts?.split(',').length
+              : 0,
             wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
             sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
             share: post.share,
@@ -286,10 +330,14 @@ export class PostService {
             like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
             haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
             dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0] ? post.angrys?.split(',').length : 0,
+            angry: post.angrys?.split(',')[0]
+              ? post.angrys?.split(',').length
+              : 0,
             wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
             sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
-            heart: post.hearts?.split(',')[0] ? post.hearts?.split(',').length : 0,
+            heart: post.hearts?.split(',')[0]
+              ? post.hearts?.split(',').length
+              : 0,
             share: post.share,
             comment: post.comment,
             type: post.type,
@@ -557,14 +605,28 @@ export class PostService {
           post_id: comment.post_id,
           user_id: comment.user_id,
           feedback: comment.feedback,
-          angry: comment.angrys?.split(',')[0] ? comment.angrys?.split(',').length : 0,
-          dear: comment.dears?.split(',')[0] ? comment.dears?.split(',').length : 0,
-          haha: comment.hahas?.split(',')[0] ? comment.hahas?.split(',').length : 0,
+          angry: comment.angrys?.split(',')[0]
+            ? comment.angrys?.split(',').length
+            : 0,
+          dear: comment.dears?.split(',')[0]
+            ? comment.dears?.split(',').length
+            : 0,
+          haha: comment.hahas?.split(',')[0]
+            ? comment.hahas?.split(',').length
+            : 0,
           type: comment.type,
-          heart: comment.hearts?.split(',')[0] ? comment.hearts?.split(',').length : 0,
-          like: comment.likes?.split(',')[0] ? comment.likes?.split(',').length : 0,
-          wow: comment.wows?.split(',')[0] ? comment.wows?.split(',').length : 0,
-          sad: comment.sads?.split(',')[0] ? comment.sads?.split(',').length : 0,
+          heart: comment.hearts?.split(',')[0]
+            ? comment.hearts?.split(',').length
+            : 0,
+          like: comment.likes?.split(',')[0]
+            ? comment.likes?.split(',').length
+            : 0,
+          wow: comment.wows?.split(',')[0]
+            ? comment.wows?.split(',').length
+            : 0,
+          sad: comment.sads?.split(',')[0]
+            ? comment.sads?.split(',').length
+            : 0,
           interact: { ...interact },
           user: { ...user },
         };
@@ -596,22 +658,31 @@ export class PostService {
         'hearts',
       ];
       for (const key of interactKeys) {
-        if (!post[key]?.split(',').length) continue;
-        const isValid = post[key].includes(user_id);
+        const isValid = post[key]
+          ?.split(',')
+          .find((pos: any) => Number(pos) === user_id);
         if (isValid) {
           post[key] = post[key].filter((item: number) => item != user_id);
         }
       }
-      post[body.type].push(user_id);
+      const newStatus = post[body.type]
+        ? post[body.type] + ',' + user_id
+        : `${user_id}`;
+
+      const newPost = {
+        ...post,
+        [body.type]: `${newStatus}`,
+      };
 
       await this.prismaService.post.update({
         where: {
           id: body.post_id,
         },
         data: {
-          ...post,
+          ...newPost,
         },
       });
+
       return {
         status: 200,
         data: {
@@ -621,7 +692,9 @@ export class PostService {
           like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
           haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
           dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-          angry: post.angrys?.split(',')[0] ? post.angrys?.split(',').length : 0,
+          angry: post.angrys?.split(',')[0]
+            ? post.angrys?.split(',').length
+            : 0,
           wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
           sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
           share: post.share,
@@ -682,12 +755,24 @@ export class PostService {
           id: comment.id,
           description: comment.description,
           images: comment.image,
-          like: comment.likes?.split(',')[0] ? comment.likes?.split(',').length : 0,
-          haha: comment.hahas?.split(',')[0] ? comment.hahas?.split(',').length : 0,
-          dear: comment.dears?.split(',')[0] ? comment.dears?.split(',').length : 0,
-          angry: comment.angrys?.split(',')[0] ? comment.angrys?.split(',').length : 0,
-          wow: comment.wows?.split(',')[0] ? comment.wows?.split(',').length : 0,
-          sad: comment.sads?.split(',')[0] ? comment.sads?.split(',').length : 0,
+          like: comment.likes?.split(',')[0]
+            ? comment.likes?.split(',').length
+            : 0,
+          haha: comment.hahas?.split(',')[0]
+            ? comment.hahas?.split(',').length
+            : 0,
+          dear: comment.dears?.split(',')[0]
+            ? comment.dears?.split(',').length
+            : 0,
+          angry: comment.angrys?.split(',')[0]
+            ? comment.angrys?.split(',').length
+            : 0,
+          wow: comment.wows?.split(',')[0]
+            ? comment.wows?.split(',').length
+            : 0,
+          sad: comment.sads?.split(',')[0]
+            ? comment.sads?.split(',').length
+            : 0,
           share: comment.share,
           created_at: comment.created_at,
           updated_at: comment.updated_at,
@@ -735,15 +820,31 @@ export class PostService {
           post_id: comment.post_id,
           description: comment.description,
           image: comment.image,
-          like: comment.likes?.split(',')[0] ? comment.likes?.split(',').length : 0,
-          haha: comment.hahas?.split(',')[0] ? comment.hahas?.split(',').length : 0,
-          dear: comment.dears?.split(',')[0] ? comment.dears?.split(',').length : 0,
-          angry: comment.angrys?.split(',')[0] ? comment.angrys?.split(',').length : 0,
-          wow: comment.wows?.split(',')[0] ? comment.wows?.split(',').length : 0,
-          heart: comment.hearts?.split(',')[0] ? comment.hearts?.split(',').length : 0,
-          sad: comment.sads?.split(',')[0] ? comment.sads?.split(',').length : 0,
+          like: comment.likes?.split(',')[0]
+            ? comment.likes?.split(',').length
+            : 0,
+          haha: comment.hahas?.split(',')[0]
+            ? comment.hahas?.split(',').length
+            : 0,
+          dear: comment.dears?.split(',')[0]
+            ? comment.dears?.split(',').length
+            : 0,
+          angry: comment.angrys?.split(',')[0]
+            ? comment.angrys?.split(',').length
+            : 0,
+          wow: comment.wows?.split(',')[0]
+            ? comment.wows?.split(',').length
+            : 0,
+          heart: comment.hearts?.split(',')[0]
+            ? comment.hearts?.split(',').length
+            : 0,
+          sad: comment.sads?.split(',')[0]
+            ? comment.sads?.split(',').length
+            : 0,
           type: comment.type,
-          feedback: comment.feedback?.split(',')[0] ? comment.feedback?.split(',').length : 0,
+          feedback: comment.feedback?.split(',')[0]
+            ? comment.feedback?.split(',').length
+            : 0,
           share: comment.share,
           user_id: comment.user_id,
           updated_at: comment.updated_at,
