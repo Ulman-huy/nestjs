@@ -14,6 +14,6 @@ export class UpdatePostDTO {
   share?: number;
   comment?: number;
   type?: string;
-  hides?: string;
+  hides?: number[];
   background?: string;
 }

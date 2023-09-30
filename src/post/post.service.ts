@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommentDTO, InsetPostDTO, UpdatePostDTO } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PostDTO } from './dto/post.dto';
+import { AuthDTO } from 'src/auth/dto';
 import { findInteract, findInteractComment } from 'src/utils';
 
 @Injectable({})
@@ -58,17 +59,13 @@ export class PostService {
             id: post.id,
             description: post.description,
             images: post.images,
-            like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
-            haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
-            dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0]
-              ? post.angrys?.split(',').length
-              : 0,
-            heart: post.hearts?.split(',')[0]
-              ? post.hearts?.split(',').length
-              : 0,
-            wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
-            sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            heart: post.hearts.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
             share: post.share,
             comment: post.comment,
             type: post.type,
@@ -80,27 +77,13 @@ export class PostService {
               id: comment.id,
               description: comment.description,
               images: comment.image,
-              like: comment.likes?.split(',')[0]
-                ? comment.likes?.split(',').length
-                : 0,
-              haha: comment.hahas?.split(',')[0]
-                ? comment.hahas?.split(',').length
-                : 0,
-              dear: comment.dears?.split(',')[0]
-                ? comment.dears?.split(',').length
-                : 0,
-              angry: comment.angrys?.split(',')[0]
-                ? comment.angrys?.split(',').length
-                : 0,
-              heart: comment.hearts?.split(',')[0]
-                ? comment.hearts?.split(',').length
-                : 0,
-              wow: comment.wows?.split(',')[0]
-                ? comment.wows?.split(',').length
-                : 0,
-              sad: comment.sads?.split(',')[0]
-                ? comment.sads?.split(',').length
-                : 0,
+              like: comment.likes.length,
+              haha: comment.hahas.length,
+              dear: comment.dears.length,
+              angry: comment.angrys.length,
+              heart: comment.hearts.length,
+              wow: comment.wows.length,
+              sad: comment.sads.length,
               created_at: comment.created_at,
               updated_at: comment.updated_at,
               user_id: comment.user_id,
@@ -114,17 +97,13 @@ export class PostService {
             id: post.id,
             description: post.description,
             images: post.images,
-            like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
-            haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
-            dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0]
-              ? post.angrys?.split(',').length
-              : 0,
-            heart: post.hearts?.split(',')[0]
-              ? post.hearts?.split(',').length
-              : 0,
-            wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
-            sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            heart: post.hearts.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
             share: post.share,
             comment: post.comment,
             type: post.type,
@@ -194,17 +173,13 @@ export class PostService {
             id: post.id,
             description: post.description,
             images: post.images,
-            like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
-            haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
-            dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0]
-              ? post.angrys?.split(',').length
-              : 0,
-            wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
-            sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
-            heart: post.hearts?.split(',')[0]
-              ? post.hearts?.split(',').length
-              : 0,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            heart: post.hearts.length,
             share: post.share,
             comment: post.comment,
             type: post.type,
@@ -217,27 +192,13 @@ export class PostService {
               id: comment.id,
               description: comment.description,
               images: comment.image,
-              like: comment.likes?.split(',')[0]
-                ? comment.likes?.split(',').length
-                : 0,
-              haha: comment.hahas?.split(',')[0]
-                ? comment.hahas?.split(',').length
-                : 0,
-              dear: comment.dears?.split(',')[0]
-                ? comment.dears?.split(',').length
-                : 0,
-              angry: comment.angrys?.split(',')[0]
-                ? comment.angrys?.split(',').length
-                : 0,
-              heart: comment.hearts?.split(',')[0]
-                ? comment.hearts?.split(',').length
-                : 0,
-              wow: comment.wows?.split(',')[0]
-                ? comment.wows?.split(',').length
-                : 0,
-              sad: comment.sads?.split(',')[0]
-                ? comment.sads?.split(',').length
-                : 0,
+              like: comment.likes.length,
+              haha: comment.hahas.length,
+              dear: comment.dears.length,
+              angry: comment.angrys.length,
+              heart: comment.hearts.length,
+              wow: comment.wows.length,
+              sad: comment.sads.length,
               created_at: comment.created_at,
               updated_at: comment.updated_at,
               interact: { ...interactComment },
@@ -252,17 +213,13 @@ export class PostService {
             id: post.id,
             description: post.description,
             images: post.images,
-            like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
-            haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
-            dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0]
-              ? post.angrys?.split(',').length
-              : 0,
-            heart: post.hearts?.split(',')[0]
-              ? post.hearts?.split(',').length
-              : 0,
-            wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
-            sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            heart: post.hearts.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
             share: post.share,
             comment: post.comment,
             type: post.type,
@@ -327,17 +284,13 @@ export class PostService {
             id: post.id,
             description: post.description,
             images: post.images,
-            like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
-            haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
-            dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-            angry: post.angrys?.split(',')[0]
-              ? post.angrys?.split(',').length
-              : 0,
-            wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
-            sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
-            heart: post.hearts?.split(',')[0]
-              ? post.hearts?.split(',').length
-              : 0,
+            like: post.likes.length,
+            haha: post.hahas.length,
+            dear: post.dears.length,
+            angry: post.angrys.length,
+            wow: post.wows.length,
+            sad: post.sads.length,
+            heart: post.hearts.length,
             share: post.share,
             comment: post.comment,
             type: post.type,
@@ -605,28 +558,14 @@ export class PostService {
           post_id: comment.post_id,
           user_id: comment.user_id,
           feedback: comment.feedback,
-          angry: comment.angrys?.split(',')[0]
-            ? comment.angrys?.split(',').length
-            : 0,
-          dear: comment.dears?.split(',')[0]
-            ? comment.dears?.split(',').length
-            : 0,
-          haha: comment.hahas?.split(',')[0]
-            ? comment.hahas?.split(',').length
-            : 0,
+          angry: comment.angrys.length,
+          dear: comment.dears.length,
+          haha: comment.hahas.length,
           type: comment.type,
-          heart: comment.hearts?.split(',')[0]
-            ? comment.hearts?.split(',').length
-            : 0,
-          like: comment.likes?.split(',')[0]
-            ? comment.likes?.split(',').length
-            : 0,
-          wow: comment.wows?.split(',')[0]
-            ? comment.wows?.split(',').length
-            : 0,
-          sad: comment.sads?.split(',')[0]
-            ? comment.sads?.split(',').length
-            : 0,
+          heart: comment.hearts.length,
+          like: comment.likes.length,
+          wow: comment.wows.length,
+          sad: comment.sads.length,
           interact: { ...interact },
           user: { ...user },
         };
@@ -637,10 +576,7 @@ export class PostService {
     } catch (error) {}
   }
 
-  async addStatusPost(
-    user_id: number,
-    body: { post_id: number; type: string },
-  ) {
+  async addStatusPost(user_id: number, body: { post_id: number; type: string }) {
     try {
       const post = await this.prismaService.post.findFirst({
         where: {
@@ -658,45 +594,34 @@ export class PostService {
         'hearts',
       ];
       for (const key of interactKeys) {
-        const isValid = post[key]
-          ?.split(',')
-          .find((pos: any) => Number(pos) === user_id);
+        if (!post[key].length) continue;
+        const isValid = post[key].includes(user_id);
         if (isValid) {
           post[key] = post[key].filter((item: number) => item != user_id);
         }
       }
-      const newStatus = post[body.type]
-        ? post[body.type] + ',' + user_id
-        : `${user_id}`;
-
-      const newPost = {
-        ...post,
-        [body.type]: `${newStatus}`,
-      };
+      post[body.type].push(user_id);
 
       await this.prismaService.post.update({
         where: {
           id: body.post_id,
         },
         data: {
-          ...newPost,
+          ...post,
         },
       });
-
       return {
         status: 200,
         data: {
           id: post.id,
           description: post.description,
           images: post.images,
-          like: post.likes?.split(',')[0] ? post.likes?.split(',').length : 0,
-          haha: post.hahas?.split(',')[0] ? post.hahas?.split(',').length : 0,
-          dear: post.dears?.split(',')[0] ? post.dears?.split(',').length : 0,
-          angry: post.angrys?.split(',')[0]
-            ? post.angrys?.split(',').length
-            : 0,
-          wow: post.wows?.split(',')[0] ? post.wows?.split(',').length : 0,
-          sad: post.sads?.split(',')[0] ? post.sads?.split(',').length : 0,
+          like: post.likes.length,
+          haha: post.hahas.length,
+          dear: post.dears.length,
+          angry: post.angrys.length,
+          wow: post.wows.length,
+          sad: post.sads.length,
           share: post.share,
           comment: post.comment,
           type: post.type,
@@ -733,7 +658,7 @@ export class PostService {
         'hearts',
       ];
       for (const key of interactKeys) {
-        if (!comment[key]?.split(',').length) continue;
+        if (!comment[key].length) continue;
         const isValid = comment[key].includes(user_id);
         if (isValid) {
           comment[key] = comment[key].filter((item: number) => item != user_id);
@@ -755,24 +680,12 @@ export class PostService {
           id: comment.id,
           description: comment.description,
           images: comment.image,
-          like: comment.likes?.split(',')[0]
-            ? comment.likes?.split(',').length
-            : 0,
-          haha: comment.hahas?.split(',')[0]
-            ? comment.hahas?.split(',').length
-            : 0,
-          dear: comment.dears?.split(',')[0]
-            ? comment.dears?.split(',').length
-            : 0,
-          angry: comment.angrys?.split(',')[0]
-            ? comment.angrys?.split(',').length
-            : 0,
-          wow: comment.wows?.split(',')[0]
-            ? comment.wows?.split(',').length
-            : 0,
-          sad: comment.sads?.split(',')[0]
-            ? comment.sads?.split(',').length
-            : 0,
+          like: comment.likes.length,
+          haha: comment.hahas.length,
+          dear: comment.dears.length,
+          angry: comment.angrys.length,
+          wow: comment.wows.length,
+          sad: comment.sads.length,
           share: comment.share,
           created_at: comment.created_at,
           updated_at: comment.updated_at,
@@ -792,13 +705,10 @@ export class PostService {
           id: commentId,
         },
       });
-      const feedbackArr: number[] = comment.feedback
-        ?.split(',')
-        .map((fe: any) => Number(fe));
       const comments = await this.prismaService.comment.findMany({
         where: {
           id: {
-            in: feedbackArr,
+            in: comment.feedback,
           },
         },
       });
@@ -820,31 +730,15 @@ export class PostService {
           post_id: comment.post_id,
           description: comment.description,
           image: comment.image,
-          like: comment.likes?.split(',')[0]
-            ? comment.likes?.split(',').length
-            : 0,
-          haha: comment.hahas?.split(',')[0]
-            ? comment.hahas?.split(',').length
-            : 0,
-          dear: comment.dears?.split(',')[0]
-            ? comment.dears?.split(',').length
-            : 0,
-          angry: comment.angrys?.split(',')[0]
-            ? comment.angrys?.split(',').length
-            : 0,
-          wow: comment.wows?.split(',')[0]
-            ? comment.wows?.split(',').length
-            : 0,
-          heart: comment.hearts?.split(',')[0]
-            ? comment.hearts?.split(',').length
-            : 0,
-          sad: comment.sads?.split(',')[0]
-            ? comment.sads?.split(',').length
-            : 0,
+          like: comment.likes.length,
+          haha: comment.hahas.length,
+          dear: comment.dears.length,
+          angry: comment.angrys.length,
+          wow: comment.wows.length,
+          heart: comment.hearts.length,
+          sad: comment.sads.length,
           type: comment.type,
-          feedback: comment.feedback?.split(',')[0]
-            ? comment.feedback?.split(',').length
-            : 0,
+          feedback: comment.feedback.length,
           share: comment.share,
           user_id: comment.user_id,
           updated_at: comment.updated_at,
@@ -861,17 +755,17 @@ export class PostService {
 
   async feedbackComment(
     user_id: number,
-    commentId: string,
+    commentId: number,
     commentData: CommentDTO,
   ) {
     // try {
     await this.prismaService.comment.update({
       where: {
-        id: Number(commentId),
+        id: commentId,
       },
       data: {
         feedback: {
-          set: commentId,
+          push: commentId,
         },
       },
     });

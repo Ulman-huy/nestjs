@@ -8,7 +8,7 @@ export type UserDTO = {
   image: string;
   bio: string;
   location: string;
-  friends: string;
+  friends: number[];
   birthday: Date;
   created_at: Date;
   updated_at: Date;
