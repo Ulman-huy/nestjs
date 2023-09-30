@@ -18,7 +18,7 @@ export class UserService {
       image: user.image,
       bio: user.bio,
       location: user.location,
-      friend: user.friends.length,
+      friend: user.friends.split(',').length,
       birthday: user.birthday,
       background: user.background,
       created_at: user.created_at,
@@ -231,10 +231,11 @@ export class UserService {
           slug: slug,
         },
       });
+      const friendsArr = user.friends.split(',').map((fr: any) => Number(fr));
       const friends = await this.prismaService.user.findMany({
         where: {
           id: {
-            in: user.friends,
+            in: friendsArr,
           },
         },
         take: 9,
@@ -246,10 +247,11 @@ export class UserService {
   }
   async getListFriend(user: UserDTO) {
     try {
+      const friendsArr = user.friends.split(',').map((fr: any) => Number(fr));
       const listFriend = await this.prismaService.user.findMany({
         where: {
           id: {
-            in: user.friends,
+            in: friendsArr,
           },
         },
         select: {

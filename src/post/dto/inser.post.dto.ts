@@ -4,12 +4,12 @@ export class InsetPostDTO {
   user_id: number;
   description?: string;
   images?: string;
-  likes?: number[];
-  hahas?: number[];
-  dears?: number[];
-  angrys?: number[];
-  wows?: number[];
-  sads?: number[];
+  likes?: string;
+  hahas?: string;
+  dears?: string;
+  angrys?: string;
+  wows?: string;
+  sads?: string;
   share?: number;
   comment?: number;
   type: string;
